@@ -50,24 +50,24 @@ export const NavBar = () => {
                 className="sm:hidden"
                 />
                 <NavbarBrand>
-                    <p className="font-bold text-inherit" style={{cursor:'pointer'}}>IntelliLearn</p>
+                    <p className="font-bold text-inherit" style={{cursor:'pointer'}} onClick={() => navigate('/home')}>IntelliLearn</p>
                 </NavbarBrand>
             </NavbarContent>
 
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <NavbarItem>
-                <Link color="foreground" style={{cursor:'pointer'}}>
-                    Features
+                <Link color="foreground" style={{cursor:'pointer'}} onClick={() => navigate('/classrooms')}>
+                    Classrooms
                 </Link>
                 </NavbarItem>
                 <NavbarItem isActive>
-                <Link aria-current="page" style={{cursor:'pointer'}}>
-                    Customers
+                <Link aria-current="page" style={{cursor:'pointer'}} onClick={() => navigate('/problems')}>
+                    Problems
                 </Link>
                 </NavbarItem>
                 <NavbarItem>
-                <Link color="foreground" style={{cursor:'pointer'}}>
-                    Integrations
+                <Link color="foreground" style={{cursor:'pointer'}} onClick={() => navigate('/minaAi')}>
+                    MinaAi
                 </Link>
                 </NavbarItem>
             </NavbarContent>
