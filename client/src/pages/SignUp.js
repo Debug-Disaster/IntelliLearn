@@ -126,7 +126,6 @@ const SignUp = () => {
                     CREATE ACCOUNT
                 </p>
                 <div className='inputs-div'>
-<<<<<<< Updated upstream
                     <div style={{display:'none', flexDirection:'row', justifyContent:'space-between'}} className='not-vsblUnt'>
                         <div style={{width:'49%'}}>
                             <Input type="email" variant="bordered" label="First Name" />
@@ -168,12 +167,11 @@ const SignUp = () => {
                         />
                     </div>
                     <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}} className='vsblUnt'>
-=======
                     {error && (
                         <Error error={error}/>
                     )}
+                    </div>
                     <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
->>>>>>> Stashed changes
                         <div style={{width:'49%'}}>
                             <Input value={first_name} onChange={(e) => setFirst_name(e.target.value)} type="text" variant="bordered" label="First Name" />
                         </div>
