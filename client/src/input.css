@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* body{
+body{
     background-color: #0F0E0E;
     color:#d8dbe2;
     min-height: 100vh;
     overflow-x: hidden;
-} */
+}
