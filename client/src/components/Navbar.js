@@ -50,23 +50,23 @@ export const NavBar = () => {
                 className="sm:hidden"
                 />
                 <NavbarBrand>
-                <p className="font-bold text-inherit">IntelliLearn</p>
+                    <p className="font-bold text-inherit" style={{cursor:'pointer'}}>IntelliLearn</p>
                 </NavbarBrand>
             </NavbarContent>
 
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <NavbarItem>
-                <Link color="foreground">
+                <Link color="foreground" style={{cursor:'pointer'}}>
                     Features
                 </Link>
                 </NavbarItem>
                 <NavbarItem isActive>
-                <Link aria-current="page">
+                <Link aria-current="page" style={{cursor:'pointer'}}>
                     Customers
                 </Link>
                 </NavbarItem>
                 <NavbarItem>
-                <Link color="foreground">
+                <Link color="foreground" style={{cursor:'pointer'}}>
                     Integrations
                 </Link>
                 </NavbarItem>
@@ -87,7 +87,7 @@ export const NavBar = () => {
             {!user &&
             <div style={{display:'flex', gap:'15px'}}>
                 <NavbarItem className="hidden lg:flex">
-                <Link onClick={() => navigate('/signin')}>
+                <Link onClick={() => navigate('/signin')} style={{cursor:'pointer'}}>
                     Login
                 </Link>
                 </NavbarItem>

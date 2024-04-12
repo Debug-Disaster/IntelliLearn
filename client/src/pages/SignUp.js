@@ -1,4 +1,6 @@
 import {useEffect, useState} from 'react';
+import mentor from '../assets/mentor.gif'
+import student from '../assets/student.gif'
 import {Input, Button, Avatar} from "@nextui-org/react";
 import {Link} from 'react-router-dom';
 import Error from '../components/Error';
@@ -106,14 +108,14 @@ const SignUp = () => {
             <div className="dialog-signup">
                 <div onClick={() => getRole("student")}>
                     <div>
-                        <Avatar style={{marginTop:'-75px', marginBottom:'20px'}} isBordered src="https://i.pravatar.cc/150?u=a042581f4e29026024d" className="w-60 h-60 text-large" />
+                        <Avatar style={{marginTop:'-75px', marginBottom:'20px'}} radius="sm" isBordered src={student} className="w-60 h-60 text-large" />
                         <p>Student</p>
                         <p>A secure environment for learning</p>
                     </div>
                 </div>
                 <div onClick={() => getRole("mentor")}>
                     <div>
-                        <Avatar style={{marginTop:'-75px', marginBottom:'20px'}}isBordered src="https://i.pravatar.cc/150?u=a042581f4e29026024d" className="w-60 h-60 text-large" />
+                        <Avatar style={{marginTop:'-75px', marginBottom:'20px'}}radius="sm" isBordered src={mentor} className="w-60 h-60 text-large" />
                         <p>Mentor</p>
                         <p>A secure environment for teaching</p>
                     </div>
