@@ -44,6 +44,22 @@ const userSchema = new mongoose.Schema({
     user_photo: {
         type: String,
         required: true
+    },
+    emailId : {
+        type: String,
+        required: true
+    },
+    school : {
+        type: String,
+        required: true
+    },
+    major : {
+        type: String,
+        required: true
+    },
+    subjects : {
+        type: Array,
+        required: true
     }
 }, {timestamps: true})
 

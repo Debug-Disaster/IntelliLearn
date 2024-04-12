@@ -4,6 +4,8 @@ const router = express.Router()
 const bcrypt = require('bcrypt')
 const cookie = require('cookie')
 const User = require('../models/user')
+const nodemailer = require('nodemailer')
+const crypto = require('crypto')
 require('dotenv').config()
 const generateToken = async(last_name, first_name, email, role) => {
     const primaryToken = jwt.sign({last_name, first_name, email, role}, process.env.SECRET_KEY, {expiresIn: '1d'})
@@ -46,19 +48,21 @@ const getUser = async(primaryToken, refreshToken) => {
 }
 router.post('/register', async(req, res) => {
     try{
-        const {last_name, first_name, email, password, role, status} = req.body
+        const {last_name, first_name, email, password, role, status, school, major, subjects, confirmPassword, user_photo} = req.body
         const userExistsWithThisEmail = await User.findOne({email})
         if(userExistsWithThisEmail){
-            return res.status(400).json({error: 'User with this email already exists'})
+            return res.status(400).json({success:false, error: 'User with this email already exists'})
         }
         const userExistsWithTheseNames = await User.findOne({last_name, first_name})
         if(userExistsWithTheseNames){
-            return res.status(400).json({error: 'User with these names already exists'})
+            return res.status(400).json({success:false, error: 'User with these names already exists'})
+        }
+        if(password !== confirmPassword){
+            return res.status(400).json({success: false, error: 'Passwords do not match'})
         }
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, salt)
-        const emailConfirmationCode = Math.floor(100000 + Math.random() * 900000).toString()
-        const user = new User({last_name, first_name, email, password: hashedPassword, role, status, emailConfirmationCode})
+        const user = new User({last_name, first_name, email, password: hashedPassword, role, status, school, major, subjects, user_photo})
         await user.save()
         const {primaryToken, refreshToken} = await generateToken(last_name, first_name, email, role)
         res.cookie('refreshToken', refreshToken, {httpOnly: true}).cookie('primaryToken', primaryToken, {httpOnly: true}).status(201).json({success: true, message: 'User created successfully'})
@@ -103,4 +107,54 @@ router.get('/getUser', async(req, res) => {
         res.status(500).json({success: false, error: error.message})
     }
 });
+router.post('/logout', async(req, res) => {
+    try{
+        res.clearCookie('primaryToken').clearCookie('refreshToken').status(200).json({success: true, message: 'User logged out successfully'})
+    }catch(error){
+        res.status(500).json({success: false, error: error.message})
+    }
+})
+router.post('/emailConfirmation/:id', async(req, res) => {
+    try{
+        const emailId = req.params.id
+        const user = await User.findOne({emailId})
+        if(!user){
+            return res.status(400).json({success: false, error: 'User not found'})
+        }
+        if(user.emailConfirmed){
+            return res.status(400).json({success: false, error: 'Email already confirmed'})
+        }
+        if(user.emailConfirmationCode !== req.body.emailConfirmationCode){
+            return res.status(400).json({success: false, error: 'Invalid email confirmation code'})
+        }
+        if(user.emailConfirmationCodeExpiresAt < new Date()){
+            return res.status(400).json({success: false, error: 'Email confirmation code expired'})
+        }
+        user.emailConfirmed = true
+        await user.save()
+        res.status(200).json({success: true, message: 'Email confirmed successfully'})
+    }catch(error){
+        res.status(500).json({success: false, error: error.message})
+    }
+})
+router.get('/resendEmailConfirmation/:email', async(req, res) => {
+    try{
+        const email = req.params.email
+        const user = await User.findOne({email})
+        if(!user){
+            return res.status(400).json({success: false, error: 'User not found'})
+        }
+        if(user.emailConfirmed){
+            return res.status(400).json({success: false, error: 'Email already confirmed'})
+        }
+        if(user.emailConfirmationCodeExpiresAt < new Date()){
+            return res.status(400).json({success: false, error: 'Email confirmation code expired'})
+        }
+        user.emailConfirmationCode = Math.floor(100000 + Math.random() * 900000).toString()
+        await user.save()
+        res.status(200).json({success: true, message: 'Email confirmation code resent successfully'})
+    }catch(error){
+        res.status(500).json({success: false, error: error.message})
+    }
+})
 module.exports = router
