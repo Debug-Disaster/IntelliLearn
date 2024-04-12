@@ -32,11 +32,11 @@
     flex-direction: column;
 }
 
-.dialog-signup div div p:nth-child(1){
+.dialog-signup div div p:nth-child(2){
     font-size: 2rem;
 }
 
-.dialog-signup div div p:nth-child(2){
+.dialog-signup div div p:nth-child(3){
     font-size: 1.2rem;
 }
 
