@@ -1,5 +1,44 @@
-@media (max-width:550px) {
+@media (max-width:900px) {
     .search-input{
         display: none;
     }
+}
+
+/*also contains sign in/up*/
+
+.dialog-signup{
+    margin: 0 auto;
+    margin-top:50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: calc(90vh - 65px);
+    width: 80%;
+}
+
+.dialog-signup div{
+    width: 48%;
+}
+
+.dialog-signup div:nth-child(1){
+    background-color: blue;
+}
+
+.dialog-signup div:nth-child(2){
+    background-color: red;
+}
+
+.signUp-div{
+    margin-top: 50px !important;
+    display: flex;
+    justify-content: center;
+    width: 60%;
+    margin: 0 auto;
+}
+
+.signUp-create-account-text{
+    margin:0 auto;
+    font-family: 'Montserrat ExtraBold';
+    font-size: 1.7rem;
+    color: #D5D8DF;
 }

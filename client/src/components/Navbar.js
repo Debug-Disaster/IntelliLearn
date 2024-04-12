@@ -3,6 +3,7 @@ Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Avatar, User, Input} from
 import {useState, useEffect} from 'react'
 import {UserContext} from '../context/UserContext'
 import {useContext} from 'react'
+import {useNavigate} from 'react-router-dom'
 export const SearchIcon = (props) => (
     <svg
       aria-hidden="true"
@@ -33,6 +34,7 @@ export const SearchIcon = (props) => (
   
 
 export const NavBar = () => {
+    const navigate = useNavigate();
     const {user, auth, logout, getUser} = useContext(UserContext)
     getUser()
     console.log(user)
@@ -84,11 +86,18 @@ export const NavBar = () => {
             type="search"
             />
             {!user &&
+            <div style={{display:'flex', gap:'15px'}}>
+                <NavbarItem className="hidden lg:flex">
+                <Link onClick={() => navigate('/signin')}>
+                    Login
+                </Link>
+                </NavbarItem>
                 <NavbarItem>
-                <Button as={Link} color="primary" variant="flat">
+                <Button as={Link} color="primary" variant="flat" onClick={() => navigate('/signup')}>
                     Sign Up
                 </Button>
                 </NavbarItem>
+            </div>
             }
             {user ?
                 <NavbarItem className="hidden lg:flex">
