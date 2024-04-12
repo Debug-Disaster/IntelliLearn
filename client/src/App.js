@@ -7,10 +7,11 @@ import NotFound from "./pages/NotFound";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import { CreateClassroom } from "./pages/CreateClassroom";
+import Profil from "./pages/Profil";
 function App() {
   return (
     <BrowserRouter>
-      <main className="dark text-foreground bg-background">
+      <main className="dark text-foreground">
         <NavBar />
         <Routes>
           <Route
@@ -36,6 +37,10 @@ function App() {
           <Route
             path="/classroom/create"
             element={<CreateClassroom/>}
+          />
+          <Route
+            path="/profile/:username"
+            element={<Profil/>}
           />
         </Routes>
       </main>

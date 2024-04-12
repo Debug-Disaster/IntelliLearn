@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './input.css'
 import '../src/css/navbar.css'
+import '../src/css/profile.css'
 import { NextUIProvider } from '@nextui-org/react';
 import  {UserContextProvider} from './context/UserContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -10,7 +11,7 @@ root.render(
   <React.StrictMode>
     <NextUIProvider>
       <UserContextProvider>
-        <App />
+        <App style={{backgroundColor:'#0F0E0E'}}/>
       </UserContextProvider>
     </NextUIProvider>
   </React.StrictMode>
