@@ -6,6 +6,7 @@ import Homepage from "./pages/Homepage";
 import NotFound from "./pages/NotFound";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import { CreateClassroom } from "./pages/CreateClassroom";
 function App() {
   return (
     <BrowserRouter>
@@ -31,6 +32,10 @@ function App() {
           <Route
             path="/signup"
             element={<SignUp/>}
+          />
+          <Route
+            path="/classroom/create"
+            element={<CreateClassroom/>}
           />
         </Routes>
       </main>
