@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {Input, Button} from "@nextui-org/react";
 import {Link} from 'react-router-dom';
-
+import Error from '../components/Error';
 export const EyeSlashFilledIcon = (props) => (
     <svg
       aria-hidden="true"
@@ -60,27 +60,51 @@ export const EyeSlashFilledIcon = (props) => (
 
 const SignIn = () => {
     const [isVisible, setIsVisible] = useState(false);
-
+    const [error, setError] = useState('');
     const toggleVisibility = () => setIsVisible(!isVisible);
 
     const [isVisible2, setIsVisible2] = useState(false);
 
     const toggleVisibility2 = () => setIsVisible2(!isVisible2);
 
-    const [username, setUsername] = useState('');
+    const onSubmit = async(e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch('http://localhost:8080/user/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({query, password}),
+                credentials: 'include'
+            });
+            const data = await response.json();
+            if (data.error) {
+                setError(data.error);
+            } else {
+                window.location.reload()
+            }
+        }catch(error){
+            setError(error)
+        }
+    }
+    const [query, setQuery] = useState('');
     const [password, setPassword] = useState('');
 
     return (
         <div style={{display:'flex', backgroundColor: '#0F0E0E'}}>
         <form className='signUp-div signindiv'>
+            {error && <Error message={error} />}
             <p className='signUp-create-account-text'>
                 SIGN-IN
             </p>
             <div className='inputs-div'>
-                <Input type="email" variant="bordered" label="Email or Username" />
+                <Input value={query} onChange={(e) => setQuery(e.target.value)} type="text" variant="bordered" label="Email or Username" />
                 <Input
                 label="Password"
                 variant="bordered"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 endContent={
                     <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
                     {isVisible ? (
@@ -110,8 +134,7 @@ const SignIn = () => {
                 </svg>
             </div>
             <div className='submit-div'>
-                <Button color="default" type = "submit"
-                variant="bordered" size='lg' className="btnSgnUp">
+                <Button onClick={(e) => onSubmit(e)} color="default" type = "submit" variant="bordered" size='lg' className="btnSgnUp">
                     Submit
                 </Button>
                 <p className='signText'>

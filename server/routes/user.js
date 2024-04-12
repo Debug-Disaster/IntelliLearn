@@ -86,7 +86,9 @@ router.post('/login', async(req, res) => {
             return res.status(400).json({success: false, error: 'Invalid password'})
         }
         const {primaryToken, refreshToken} = await generateToken(user.last_name, user.first_name, user.email, user.role)
-        res.cookie('refreshToken', refreshToken, {httpOnly: true}).cookie('primaryToken', primaryToken, {httpOnly: true}).status(200).json({success: true, message: 'User logged in successfully'})
+        res.cookie('refreshToken', refreshToken, {httpOnly: true, sameSite: 'none', secure: true})
+        res.cookie('primaryToken', primaryToken, {httpOnly: true, sameSite: 'none', secure: true})
+        res.status(201).json({success: true, message: 'User logged in successfully'})
    }catch(error){
        res.status(500).json({success: false, error: error.message})
    }
@@ -114,49 +116,6 @@ router.get('/getUser', async(req, res) => {
 router.post('/logout', async(req, res) => {
     try{
         res.clearCookie('primaryToken').clearCookie('refreshToken').status(200).json({success: true, message: 'User logged out successfully'})
-    }catch(error){
-        res.status(500).json({success: false, error: error.message})
-    }
-})
-router.post('/emailConfirmation/:id', async(req, res) => {
-    try{
-        const emailId = req.params.id
-        const user = await User.findOne({emailId})
-        if(!user){
-            return res.status(400).json({success: false, error: 'User not found'})
-        }
-        if(user.emailConfirmed){
-            return res.status(400).json({success: false, error: 'Email already confirmed'})
-        }
-        if(user.emailConfirmationCode !== req.body.emailConfirmationCode){
-            return res.status(400).json({success: false, error: 'Invalid email confirmation code'})
-        }
-        if(user.emailConfirmationCodeExpiresAt < new Date()){
-            return res.status(400).json({success: false, error: 'Email confirmation code expired'})
-        }
-        user.emailConfirmed = true
-        await user.save()
-        res.status(200).json({success: true, message: 'Email confirmed successfully'})
-    }catch(error){
-        res.status(500).json({success: false, error: error.message})
-    }
-})
-router.get('/resendEmailConfirmation/:email', async(req, res) => {
-    try{
-        const email = req.params.email
-        const user = await User.findOne({email})
-        if(!user){
-            return res.status(400).json({success: false, error: 'User not found'})
-        }
-        if(user.emailConfirmed){
-            return res.status(400).json({success: false, error: 'Email already confirmed'})
-        }
-        if(user.emailConfirmationCodeExpiresAt < new Date()){
-            return res.status(400).json({success: false, error: 'Email confirmation code expired'})
-        }
-        user.emailConfirmationCode = Math.floor(100000 + Math.random() * 900000).toString()
-        await user.save()
-        res.status(200).json({success: true, message: 'Email confirmation code resent successfully'})
     }catch(error){
         res.status(500).json({success: false, error: error.message})
     }

@@ -166,7 +166,11 @@ const SignUp = () => {
                             type={isVisible2 ? "text" : "password"}
                         />
                     </div>
+<<<<<<< Updated upstream
                     <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}} className='vsblUnt'>
+=======
+                    <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}} className='vsblUnt'></div>
+>>>>>>> Stashed changes
                     {error && (
                         <Error error={error}/>
                     )}
