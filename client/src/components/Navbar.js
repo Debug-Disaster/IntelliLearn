@@ -4,5 +4,5 @@ export const Navbar = () => {
        <div className="text-3xl">
         asdlkjadlkjaslkdjasdasd
        </div>
-   ) 
+   )
 }
