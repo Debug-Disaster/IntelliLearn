@@ -4,8 +4,6 @@ const router = express.Router()
 const bcrypt = require('bcrypt')
 const cookie = require('cookie')
 const User = require('../models/user')
-const nodemailer = require('nodemailer')
-const crypto = require('crypto')
 require('dotenv').config()
 const generateToken = async(last_name, first_name, email, role) => {
     const primaryToken = jwt.sign({last_name, first_name, email, role}, process.env.SECRET_KEY, {expiresIn: '1d'})
@@ -48,7 +46,10 @@ const getUser = async(primaryToken, refreshToken) => {
 }
 router.post('/register', async(req, res) => {
     try{
-        const {last_name, first_name, email, password, role, status, school, major, subjects, confirmPassword, user_photo} = req.body
+        const {last_name, first_name, email, password, role, status, school, major, subjects, confirmPassword, user_photo, username} = req.body
+        if(!last_name || !first_name || !email || !password || !username){
+            return res.status(400).json({success: false, error: 'Please fill in all fields'})
+        }
         const userExistsWithThisEmail = await User.findOne({email})
         if(userExistsWithThisEmail){
             return res.status(400).json({success:false, error: 'User with this email already exists'})
@@ -62,18 +63,21 @@ router.post('/register', async(req, res) => {
         }
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, salt)
-        const user = new User({last_name, first_name, email, password: hashedPassword, role, status, school, major, subjects, user_photo})
+        const user = new User({last_name, first_name, email, password: hashedPassword, role, status, school, major, subjects, user_photo, username})
         await user.save()
         const {primaryToken, refreshToken} = await generateToken(last_name, first_name, email, role)
-        res.cookie('refreshToken', refreshToken, {httpOnly: true}).cookie('primaryToken', primaryToken, {httpOnly: true}).status(201).json({success: true, message: 'User created successfully'})
+        console.log(primaryToken, refreshToken)
+        res.cookie('refreshToken', refreshToken, {httpOnly: true, sameSite: 'none', secure: true})
+        res.cookie('primaryToken', primaryToken, {httpOnly: true, sameSite: 'none', secure: true})
+        res.status(201).json({success: true, message: 'User created successfully'})
     }catch(error){
         res.status(500).json({success: false, error: error.message})
     }
 })
 router.post('/login', async(req, res) => {
    try{
-        const {email, password} = req.body
-        const user = await User.findOne({email})
+        const {query, password} = req.body
+        const user = await User.findOne({$or: [{email: query}, {username: query}]})
         if(!user){
             return res.status(400).json({success: false, error: 'User not found'})
         }

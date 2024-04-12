@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {Input, Button, Avatar} from "@nextui-org/react";
 import {Link} from 'react-router-dom';
-
+import Error from '../components/Error';
 export const EyeSlashFilledIcon = (props) => (
     <svg
       aria-hidden="true"
@@ -74,9 +74,31 @@ const SignUp = () => {
     const [email, setEmail] = useState('');
     const [role, setRole] = useState('');
     const [status, setStatus] = useState('');
-
+    const [confirmPassword, setConfirmPassword] = useState(''); 
+    const [username, setUsername] = useState('')
+    const [school, setSchool] = useState('')
+    const [major, setMajor] = useState('')
+    const [subjects, setSubjects] = useState('')
+    const [error, setError] = useState('');
     const getRole = (Role) =>{
         setRole(Role);
+    }
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        const res = await fetch('http://localhost:8080/user/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({last_name, first_name, password, email, role, status, username, confirmPassword, major, school}),
+            credentials: 'include'
+        });
+        const data = await res.json();
+        if(!data.success){
+            setError(data.error);
+        }else{
+            window.location.reload()
+        }
     }
     return (
         <div style={{display:'flex', backgroundColor: '#0F0E0E'}}>
@@ -104,6 +126,7 @@ const SignUp = () => {
                     CREATE ACCOUNT
                 </p>
                 <div className='inputs-div'>
+<<<<<<< Updated upstream
                     <div style={{display:'none', flexDirection:'row', justifyContent:'space-between'}} className='not-vsblUnt'>
                         <div style={{width:'49%'}}>
                             <Input type="email" variant="bordered" label="First Name" />
@@ -145,34 +168,44 @@ const SignUp = () => {
                         />
                     </div>
                     <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}} className='vsblUnt'>
+=======
+                    {error && (
+                        <Error error={error}/>
+                    )}
+                    <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+>>>>>>> Stashed changes
                         <div style={{width:'49%'}}>
-                            <Input type="email" variant="bordered" label="First Name" />
+                            <Input value={first_name} onChange={(e) => setFirst_name(e.target.value)} type="text" variant="bordered" label="First Name" />
                         </div>
                         <div style={{width:'49%'}}>
                             <Input
-                            label="Password"
-                            variant="bordered"
-                            endContent={
-                                <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
-                                {isVisible ? (
-                                    <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                                ) : (
-                                    <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                                )}
-                                </button>
-                            }
-                            type={isVisible ? "text" : "password"}
+                                label="Password"
+                                variant="bordered"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                endContent={
+                                    <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
+                                    {isVisible ? (
+                                        <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                                    ) : (
+                                        <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                                    )}
+                                    </button>
+                                }
+                                type={isVisible ? "text" : "password"}
                             />
                         </div>
                     </div>
                     <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}} className='vsblUnt'>
                         <div style={{width:'49%'}}>
-                            <Input type="email" variant="bordered" label="Last Name" />
+                            <Input value={last_name} onChange={(e) => setLast_name(e.target.value)} type="text" variant="bordered" label="Last Name" />
                         </div>
                         <div style={{width:'49%'}}>
                             <Input
                             label="Confirm password"
                             variant="bordered"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
                             endContent={
                                 <button className="focus:outline-none" type="button" onClick={toggleVisibility2}>
                                 {isVisible2 ? (
@@ -186,8 +219,10 @@ const SignUp = () => {
                             />
                         </div>
                     </div>
-                    <Input type="email" variant="bordered" label="Email" />
-                    <Input type="email" variant="bordered" label="Username" />
+                    <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} variant="bordered" label="Email" />
+                    <Input type="text" value={username} onChange={(e) => setUsername(e.target.value)} variant="bordered" label="Username" />
+                    <Input type="text" value={school} onChange={(e) => setSchool(e.target.value)} variant="bordered" label="School" />
+                    <Input type="text" value={major} onChange={(e) => setMajor(e.target.value)} variant="bordered" label="Major" />
                 </div>
                 <div className="or-sign-with">
                     <div className="or-sign-with-line"> </div>
@@ -206,8 +241,7 @@ const SignUp = () => {
                     </svg>
                 </div>
                 <div className='submit-div'>
-                    <Button color="default" type = "submit"
-                    variant="bordered" size='lg' className="btnSgnUp">
+                    <Button onClick={(e) => onSubmit(e)} color="default" type = "submit" variant="bordered" size='lg' className="btnSgnUp">
                         Submit
                     </Button>
                     <p className='signText'>
@@ -219,14 +253,4 @@ const SignUp = () => {
         </div>
     );
 }
- 
-
-/*
-    "last_name": "sofian",
-    "first_name": "adelin",
-    "password": "a90729d8d5678a48e8d8ff2e86899a1fdaa7f890fbf8c213a62a7b4ae5742e29",
-    "email": "adelinmihai071@gmail.com",
-    "role": "student",
-    "status": "aa"
-*/
 export default SignUp;

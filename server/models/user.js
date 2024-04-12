@@ -23,31 +23,9 @@ const userSchema = new mongoose.Schema({
     },
     status : {
         type: String,
-        required: true
-    },
-    emailConfirmationCode : {
-        type: String,
-        required: true
-    },
-    emailConfirmed : {
-        type: Boolean,
-        required: true
-    },
-    emailConfirmedAt : {
-        type: Date,
-        required: true
-    },
-    emailConfirmationCodeExpiresAt : {
-        type: Date,
-        required: true
     },
     user_photo: {
         type: String,
-        required: true
-    },
-    emailId : {
-        type: String,
-        required: true
     },
     school : {
         type: String,
@@ -59,6 +37,10 @@ const userSchema = new mongoose.Schema({
     },
     subjects : {
         type: Array,
+        required: true
+    },
+    username : {
+        type: String,
         required: true
     }
 }, {timestamps: true})

@@ -36,7 +36,6 @@ export const SearchIcon = (props) => (
 export const NavBar = () => {
     const navigate = useNavigate();
     const {user, auth, logout, getUser} = useContext(UserContext)
-    getUser()
     console.log(user)
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -118,7 +117,7 @@ export const NavBar = () => {
                     <DropdownItem key="settings">
                         Settings
                     </DropdownItem>
-                    <DropdownItem key="logout" color="danger">
+                    <DropdownItem key="logout" color="danger" onClick={logout}>
                         Log Out
                     </DropdownItem>
                     </DropdownMenu>
