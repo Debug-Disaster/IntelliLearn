@@ -2,6 +2,10 @@ import {useEffect, useState} from 'react';
 import {Input, Button} from "@nextui-org/react";
 import {Link} from 'react-router-dom';
 import Error from '../components/Error';
+import NotFound from './NotFound';
+import {UserContext} from '../context/UserContext';
+import {useContext} from 'react';
+import { useNavigate } from 'react-router-dom';
 export const EyeSlashFilledIcon = (props) => (
     <svg
       aria-hidden="true"
@@ -62,9 +66,9 @@ const SignIn = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [error, setError] = useState('');
     const toggleVisibility = () => setIsVisible(!isVisible);
-
+    const {user} = useContext(UserContext)
     const [isVisible2, setIsVisible2] = useState(false);
-
+    const navigate = useNavigate();
     const toggleVisibility2 = () => setIsVisible2(!isVisible2);
 
     const onSubmit = async(e) => {
@@ -82,6 +86,7 @@ const SignIn = () => {
             if (data.error) {
                 setError(data.error);
             } else {
+                navigate('/')
                 window.location.reload()
             }
         }catch(error){
@@ -90,7 +95,11 @@ const SignIn = () => {
     }
     const [query, setQuery] = useState('');
     const [password, setPassword] = useState('');
-
+    if(user){
+      return (
+        <NotFound />
+      )
+    }
     return (
         <div style={{display:'flex', backgroundColor: '#0F0E0E'}}>
         <form className='signUp-div signindiv'>

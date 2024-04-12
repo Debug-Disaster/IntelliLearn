@@ -2,8 +2,11 @@ import {useEffect, useState} from 'react';
 import mentor from '../assets/mentor.gif'
 import student from '../assets/student.gif'
 import {Input, Button, Avatar} from "@nextui-org/react";
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import Error from '../components/Error';
+import NotFound from './NotFound';
+import {useContext} from 'react';
+import {UserContext} from '../context/UserContext';
 export const EyeSlashFilledIcon = (props) => (
     <svg
       aria-hidden="true"
@@ -62,9 +65,9 @@ export const EyeSlashFilledIcon = (props) => (
 
 const SignUp = () => {
     const [isVisible, setIsVisible] = useState(false);
-
+    const {user} = useContext(UserContext)
     const toggleVisibility = () => setIsVisible(!isVisible);
-
+    const navigate = useNavigate()
     const [isVisible2, setIsVisible2] = useState(false);
 
     const toggleVisibility2 = () => setIsVisible2(!isVisible2);
@@ -99,8 +102,14 @@ const SignUp = () => {
         if(!data.success){
             setError(data.error);
         }else{
+            navigate('/')
             window.location.reload()
         }
+    }
+    if(user){
+        return (
+            <NotFound />
+        )
     }
     return (
         <div style={{display:'flex', backgroundColor: '#0F0E0E'}}>
