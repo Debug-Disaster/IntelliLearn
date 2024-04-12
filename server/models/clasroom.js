@@ -24,7 +24,11 @@ const classroomSchema = new mongoose.Schema({
     status: {
         type: String,
         required: true
-    }
+    },
+/*     password: {
+        type: String,
+        required: false
+    } */
 }, {timestamps: true})
 
 module.exports = mongoose.model('classroom', classroomSchema)

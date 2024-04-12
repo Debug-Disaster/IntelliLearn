@@ -25,7 +25,10 @@ router.post('/publish', async(req, res) => {
     try{
         const cookies = cookie.parse(req.headers.cookie)
         const {mentor, subject, description, classroom_photo, status} = req.body
-        const {user} = getUser(cookies.primaryToken, cookies.refreshToken)
+        if(!mentor || !subject || !description || !classroom_photo || !status){
+            return res.status(400).json({success: false, error: 'Please fill in all fields'})
+        }
+        const {user} = await getUser(cookies.primaryToken, cookies.refreshToken)
         if(!user){
             return res.status(401).json({success: false, error: 'Unauthorized'})
         }
@@ -33,7 +36,7 @@ router.post('/publish', async(req, res) => {
         await newClassroom.save()
         return res.status(201).json({success: true, message: 'Classroom published successfully'})
     }catch(err){
-        return res.status(500).json({success: false, error: 'Internal Server Error'})
+        return res.status(500).json({success: false, error: err.message})
     }
 })
 router.put('/update/:id', async(req, res) => {

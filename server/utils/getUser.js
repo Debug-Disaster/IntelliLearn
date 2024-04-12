@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+const User = require('../models/user');
 const getUser = async(primaryToken, refreshToken) => {
     try{
         const verifiedPrimary = jwt.verify(primaryToken, process.env.SECRET_KEY);
