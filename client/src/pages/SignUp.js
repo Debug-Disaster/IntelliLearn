@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {Input, Button} from "@nextui-org/react";
+import {Input, Button, Avatar} from "@nextui-org/react";
 import {Link} from 'react-router-dom';
 
 export const EyeSlashFilledIcon = (props) => (
@@ -83,10 +83,18 @@ const SignUp = () => {
             {!role &&
             <div className="dialog-signup">
                 <div onClick={() => getRole("student")}>
-                    Student
+                    <div>
+                        <Avatar style={{marginTop:'-75px', marginBottom:'20px'}} isBordered src="https://i.pravatar.cc/150?u=a042581f4e29026024d" className="w-60 h-60 text-large" />
+                        <p>Student</p>
+                        <p>A secure environment for learning</p>
+                    </div>
                 </div>
                 <div onClick={() => getRole("mentor")}>
-                    Mentor
+                    <div>
+                        <Avatar style={{marginTop:'-75px', marginBottom:'20px'}}isBordered src="https://i.pravatar.cc/150?u=a042581f4e29026024d" className="w-60 h-60 text-large" />
+                        <p>Mentor</p>
+                        <p>A secure environment for teaching</p>
+                    </div>
                 </div>
             </div>
             }
@@ -96,7 +104,47 @@ const SignUp = () => {
                     CREATE ACCOUNT
                 </p>
                 <div className='inputs-div'>
-                    <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                    <div style={{display:'none', flexDirection:'row', justifyContent:'space-between'}} className='not-vsblUnt'>
+                        <div style={{width:'49%'}}>
+                            <Input type="email" variant="bordered" label="First Name" />
+                        </div>
+                        <div style={{width:'49%'}}>
+                            <Input type="email" variant="bordered" label="Last Name" />
+                        </div>
+                    </div>
+                    <div className='not-vsblUnt' style={{display:'none'}}>
+                        <Input
+                            label="Password"
+                            variant="bordered"
+                            endContent={
+                                <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
+                                {isVisible ? (
+                                    <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                                ) : (
+                                    <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                                )}
+                                </button>
+                            }
+                            type={isVisible ? "text" : "password"}
+                        />
+                    </div>
+                    <div className='not-vsblUnt' style={{display:'none'}}>
+                        <Input
+                            label="Confirm password"
+                            variant="bordered"
+                            endContent={
+                                <button className="focus:outline-none" type="button" onClick={toggleVisibility2}>
+                                {isVisible2 ? (
+                                    <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                                ) : (
+                                    <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                                )}
+                                </button>
+                            }
+                            type={isVisible2 ? "text" : "password"}
+                        />
+                    </div>
+                    <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}} className='vsblUnt'>
                         <div style={{width:'49%'}}>
                             <Input type="email" variant="bordered" label="First Name" />
                         </div>
@@ -117,7 +165,7 @@ const SignUp = () => {
                             />
                         </div>
                     </div>
-                    <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                    <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}} className='vsblUnt'>
                         <div style={{width:'49%'}}>
                             <Input type="email" variant="bordered" label="Last Name" />
                         </div>
@@ -163,7 +211,7 @@ const SignUp = () => {
                         Submit
                     </Button>
                     <p className='signText'>
-                        Already registered? <Link to="/sign-in" className="change-toInUp"> Sign-In </Link> 
+                        Already registered? <Link to="/signin" className="change-toInUp"> Sign-In </Link> 
                     </p>
                 </div>    
             </form>
