@@ -1,15 +1,11 @@
-import { Card, CardHeader, NextUIProvider } from "@nextui-org/react";
+import { Card, CardHeader} from "@nextui-org/react";
+import { Navbar } from "./components/Navbar";
+import {BrowserRouter, Route, Routes} from "react-router-dom"; 
 function App() {
   return (
-    <NextUIProvider>
-      <div>
-        <Card>
-          <CardHeader>
-            aslkdjasdjlaskdjl
-          </CardHeader>
-        </Card>
-      </div>
-    </NextUIProvider>
+    <main className="dark text-foreground bg-background">
+      <Navbar />
+    </main>
   );
 }
 
