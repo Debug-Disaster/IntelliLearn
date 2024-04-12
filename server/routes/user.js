@@ -69,6 +69,7 @@ router.get('/getUser', async(req, res) => {
             return res.status(401).json({success: false, error: 'Unauthorized'})
         }
         const {user, newPrimaryToken, newRefreshToken} = await getUser(primaryToken, refreshToken)
+        console.log(user)
         if(!user){
             return res.status(401).json({success:false, error: 'Unauthorized'})
         }
