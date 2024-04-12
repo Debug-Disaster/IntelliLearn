@@ -2,6 +2,7 @@ import App from './App';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './input.css'
+import '../src/css/navbar.css'
 import { NextUIProvider } from '@nextui-org/react';
 import  UserContextProvider from './context/UserContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));

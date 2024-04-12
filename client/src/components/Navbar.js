@@ -1,22 +1,42 @@
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button,
-Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Avatar, User} from "@nextui-org/react";
+Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Avatar, User, Input} from "@nextui-org/react";
 import {useState, useEffect} from 'react'
 
+export const SearchIcon = (props) => (
+    <svg
+      aria-hidden="true"
+      fill="none"
+      focusable="false"
+      height="1em"
+      role="presentation"
+      viewBox="0 0 24 24"
+      width="1em"
+      {...props}
+    >
+      <path
+        d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+      <path
+        d="M22 22L20 20"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+    </svg>
+  );
+  
+
 export const NavBar = () => {
-    const user = 'gigi';
+    const user = 0;
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [
-    "Profile",
-    "Dashboard",
-    "Activity",
-    "Analytics",
-    "System",
-    "Deployments",
-    "My Settings",
-    "Team Settings",
     "Help & Feedback",
-    "Log Out",
   ];
    return (
         <Navbar maxWidth="full" onMenuOpenChange={setIsMenuOpen} isBordered isBlured>
@@ -26,41 +46,48 @@ export const NavBar = () => {
                 className="sm:hidden"
                 />
                 <NavbarBrand>
-                HOME
+                <p className="font-bold text-inherit">IntelliLearn</p>
                 </NavbarBrand>
             </NavbarContent>
 
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <NavbarItem>
-                <Link color="foreground" href="#">
+                <Link color="foreground">
                     Features
                 </Link>
                 </NavbarItem>
                 <NavbarItem isActive>
-                <Link href="#" aria-current="page">
+                <Link aria-current="page">
                     Customers
                 </Link>
                 </NavbarItem>
                 <NavbarItem>
-                <Link color="foreground" href="#">
+                <Link color="foreground">
                     Integrations
                 </Link>
                 </NavbarItem>
             </NavbarContent>
-            {!user &&
             <NavbarContent justify="end">
-                <NavbarItem className="hidden lg:flex">
-                <Link href="#">Login</Link>
-                </NavbarItem>
+            <Input className='search-input'
+            classNames={{
+                base: "max-w-full sm:max-w-[10rem] h-10",
+                mainWrapper: "h-full",
+                input: "text-small",
+                inputWrapper: "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
+            }}
+            placeholder="Type to search..."
+            size="sm"
+            startContent={<SearchIcon size={18} />}
+            type="search"
+            />
+            {!user &&
                 <NavbarItem>
-                <Button as={Link} color="primary" href="#" variant="flat">
+                <Button as={Link} color="primary" variant="flat">
                     Sign Up
                 </Button>
                 </NavbarItem>
-            </NavbarContent>
             }
-            {user &&
-            <NavbarContent justify="end">
+            {user ?
                 <NavbarItem className="hidden lg:flex">
                 <Dropdown placement="bottom-end">
                     <DropdownTrigger>
@@ -85,9 +112,22 @@ export const NavBar = () => {
                     </DropdownMenu>
                 </Dropdown>
                 </NavbarItem>
+            : <></>}
             </NavbarContent>
-            }
             <NavbarMenu>
+                <div>
+                <Input
+                classNames={{
+                    base: "max-w-full sm:max-w-[10rem] h-10",
+                    mainWrapper: "h-full",
+                    input: "text-small",
+                    inputWrapper: "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
+                }}
+                placeholder="Type to search..."
+                size="sm"
+                startContent={<SearchIcon size={18} />}
+                type="search"
+                />
                 {menuItems.map((item, index) => (
                 <NavbarMenuItem key={`${item}-${index}`}>
                     <Link
@@ -95,13 +135,13 @@ export const NavBar = () => {
                         index === 2 ? "primary" : index === menuItems.length - 1 ? "danger" : "foreground"
                     }
                     className="w-full"
-                    href="#"
                     size="lg"
                     >
                     {item}
                     </Link>
                 </NavbarMenuItem>
                 ))}
+                </div>
             </NavbarMenu>
         </Navbar>
     );
