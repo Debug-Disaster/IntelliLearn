@@ -28,6 +28,22 @@ const userSchema = new mongoose.Schema({
     emailConfirmationCode : {
         type: String,
         required: true
+    },
+    emailConfirmed : {
+        type: Boolean,
+        required: true
+    },
+    emailConfirmedAt : {
+        type: Date,
+        required: true
+    },
+    emailConfirmationCodeExpiresAt : {
+        type: Date,
+        required: true
+    },
+    user_photo: {
+        type: String,
+        required: true
     }
 }, {timestamps: true})
 

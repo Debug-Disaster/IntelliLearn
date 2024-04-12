@@ -1,20 +1,23 @@
+const jwt = require('jsonwebtoken')
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
+const cookie = require('cookie')
 const User = require('../models/user')
+require('dotenv').config()
 const generateToken = async(last_name, first_name, email, role) => {
-    const primaryToken = await jwt.sign({last_name, first_name, email, role}, process.env.SECRET_KEY, {expiresIn: '1d'})
-    const refreshToken = await jwt.sign({last_name, first_name, email, role}, process.env.SECOND_SECRET_KEY, {expiresIn: '7d'})
+    const primaryToken = jwt.sign({last_name, first_name, email, role}, process.env.SECRET_KEY, {expiresIn: '1d'})
+    const refreshToken = jwt.sign({last_name, first_name, email, role}, process.env.SECOND_SECRET_KEY, {expiresIn: '7d'})
     return {primaryToken, refreshToken}
 }
 const getUser = async(primaryToken, refreshToken) => {
     try{
-        
-        const verifiedPrimary = jwt.verify(primaryToken, process.env.SECRET);
+        const verifiedPrimary = jwt.verify(primaryToken, process.env.SECRET_KEY);
         if(verifiedPrimary.email){
             const email = verifiedPrimary.email
             const user = await User.findOne({email}).select('-password -emailConfirmationCode')
-            return user;
+            console.log(user)
+            return {user};
         }else{
                 const refreshVerified = jwt.verify(refreshToken, process.env.SECOND_SECRET_KEY);
                 if(refreshVerified){
@@ -25,6 +28,7 @@ const getUser = async(primaryToken, refreshToken) => {
         }
         return null
     }catch(err){
+        console.log(err)
         if (err.name === 'TokenExpiredError') {
                 const refreshVerified = jwt.verify(refreshToken, process.env.SECOND_SECRET_KEY);
                 if (refreshVerified) {
@@ -44,10 +48,10 @@ router.post('/register', async(req, res) => {
     try{
         const {last_name, first_name, email, password, role, status} = req.body
         const userExistsWithThisEmail = await User.findOne({email})
-        const userExistsWithTheseNames = await User.findOne({last_name, first_name})
         if(userExistsWithThisEmail){
             return res.status(400).json({error: 'User with this email already exists'})
         }
+        const userExistsWithTheseNames = await User.findOne({last_name, first_name})
         if(userExistsWithTheseNames){
             return res.status(400).json({error: 'User with these names already exists'})
         }
@@ -81,11 +85,9 @@ router.post('/login', async(req, res) => {
 })
 router.get('/getUser', async(req, res) => {
     try{
-        if(!req || !req.cookies){
-            return res.status(401).json({success: false, error: 'Unauthorized'})
-        }
-        const primaryToken = req.cookies.primaryToken
-        const refreshToken = req.cookies.refreshToken
+        const cookies = cookie.parse(req.headers.cookie)
+        const primaryToken = cookies.primaryToken
+        const refreshToken = cookies.refreshToken
         if(!primaryToken || !refreshToken){
             return res.status(401).json({success: false, error: 'Unauthorized'})
         }

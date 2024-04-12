@@ -2,8 +2,12 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const userRouter = require('./routes/user')
+const cookieParser = require('cookie-parser')
+app.use(cookieParser())
 const cors = require('cors')
 app.use(cors({credentials: true, origin: 'http://localhost:3000'}))
+const bodyParser = require('body-parser')
+app.use(bodyParser.json());
 app.use('/user', userRouter)
 require('dotenv').config()
 app.use((req, res, next) => {
