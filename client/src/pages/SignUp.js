@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import mentor from '../assets/mentor.gif'
 import student from '../assets/student.gif'
-import {Input, Button, Avatar} from "@nextui-org/react";
+import {Input, Button, Avatar, Select, SelectItem} from "@nextui-org/react";
 import {Link, useNavigate} from 'react-router-dom';
 import Error from '../components/Error';
 import NotFound from './NotFound';
@@ -71,7 +71,35 @@ const SignUp = () => {
     const [isVisible2, setIsVisible2] = useState(false);
 
     const toggleVisibility2 = () => setIsVisible2(!isVisible2);
+    const YOE = [
+        { value: '<2 years', label: '<2 years' },
+        { value: '2-5 years', label: '2-5 years' },
+        { value: '5-10 years', label: '5-10 years' },
+        { value: '10+ years', label: '10+ years' }
+      ];
+    const FOE = [
+    { value: 'Web Development - Backend', label: 'Web Development - Backend' },
+    { value: 'Web Development - Frontend', label: 'Web Development - Frontend' },
+    { value: 'Data Science', label: 'Data Science' },
+    { value: 'Cybernetics', label: 'Cybernetics' },
+    { value: 'Machine Learning', label: 'Machine Learning' },
+    { value: 'Mobile Development', label: 'Mobile Development' },
+    { value: 'UI/UX Design', label: 'UI/UX Design' },
+    { value: 'System Administration', label: 'System Administration' },
+    { value: 'Database Administration', label: 'Database Administration' },
+    { value: 'Network Engineering', label: 'Network Engineering' },
+    { value: 'Algorithms', label: 'Algorithms' }
+    ];
 
+    const COE = [
+        { value: 'Full-time Employee', label: 'Full-time Employee' },
+        { value: 'Part-time Employee', label: 'Part-time Employee' },
+        { value: 'Freelancer', label: 'Freelancer' },
+        { value: 'Unemployed', label: 'Unemployed' },
+        { value: 'Retired', label: 'Retired' },
+        { value: 'Self-Employed', label: 'Self-Employed' },
+        { value: 'Other', label: 'Other' }
+    ];
 
     const [last_name, setLast_name] = useState('');
     const [first_name, setFirst_name] = useState('');
@@ -183,7 +211,7 @@ const SignUp = () => {
                         <Error error={error}/>
                     )}
                     </div>
-                    <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                    <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}} className='vsblUnt'>
                         <div style={{width:'49%'}}>
                             <Input value={first_name} onChange={(e) => setFirst_name(e.target.value)} type="text" variant="bordered" label="First Name" />
                         </div>
@@ -231,9 +259,93 @@ const SignUp = () => {
                     </div>
                     <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} variant="bordered" label="Email" />
                     <Input type="text" value={username} onChange={(e) => setUsername(e.target.value)} variant="bordered" label="Username" />
-                    <Input type="text" value={school} onChange={(e) => setSchool(e.target.value)} variant="bordered" label="School" />
+                    {role === "student" ?
+                        <Input type="text" value={school} onChange={(e) => setSchool(e.target.value)} variant="bordered" label="School" />
+                    : <></>}
+                    {role === "student" ?
                     <Input type="text" value={major} onChange={(e) => setMajor(e.target.value)} variant="bordered" label="Major" />
-                </div>
+                    : <></>}
+                    {role==="mentor" ?
+                    <Input type="text" value={major} onChange={(e) => setMajor(e.target.value)} variant="bordered" label="Major in" />
+                    : <></>}
+                    {role==="mentor" ?
+                        <div style={{display:'none', flexDirection:'column', width:'100%', gap:'15px'}} className='not-vsblUnt'>
+                            <Select 
+                                label="Years of experience" 
+                                variant="bordered"
+                                >
+                                {YOE.map((yoe) => (
+                                <SelectItem key={yoe.value} value={yoe.value}>
+                                    {yoe.label}
+                                </SelectItem>
+                                ))}
+                            </Select>
+                            <Select 
+                                label="Field of Expertise" 
+                                variant="bordered"
+                                >
+                                {FOE.map((foe) => (
+                                <SelectItem key={foe.value} value={foe.value}>
+                                    {foe.label}
+                                </SelectItem>
+                                ))}
+                            </Select>
+                            <Select 
+                                label="Current Occupation" 
+                                variant="bordered"
+                                >
+                                {COE.map((coe) => (
+                                <SelectItem key={coe.value} value={coe.value}>
+                                    {coe.label}
+                                </SelectItem>
+                                ))}
+                            </Select>
+                        </div>
+                    : <></>}
+                    {role ==="mentor" ?
+                    <div style={{width:'100%', display:'flex', flexDirection:'row', justifyContent:'space-between'}} className='vsblUnt'>
+                        <div style={{width:'31%'}}>
+                            <Select 
+                                label="Years of experience" 
+                                variant="bordered"
+                                className="max-w-xs" 
+                                >
+                                {YOE.map((yoe) => (
+                                <SelectItem key={yoe.value} value={yoe.value}>
+                                    {yoe.label}
+                                </SelectItem>
+                                ))}
+                            </Select>
+                        </div>
+                        <div style={{width:'31%'}}>
+                            <Select 
+                                label="Field of Expertise" 
+                                variant="bordered"
+                                className="max-w-xs" 
+                                >
+                                {FOE.map((foe) => (
+                                <SelectItem key={foe.value} value={foe.value}>
+                                    {foe.label}
+                                </SelectItem>
+                                ))}
+                            </Select>
+                        </div>
+                        <div style={{width:'31%'}}>
+                            <Select 
+                                label="Current Occupation" 
+                                variant="bordered"
+                                className="max-w-xs" 
+                                >
+                                {COE.map((coe) => (
+                                <SelectItem key={coe.value} value={coe.value}>
+                                    {coe.label}
+                                </SelectItem>
+                                ))}
+                            </Select>
+                        </div>
+                    </div>
+                    :<></>}
+                    </div>
                 <div className="or-sign-with">
                     <div className="or-sign-with-line"> </div>
                         <p style={{padding:'7px'}}>Or </p>
