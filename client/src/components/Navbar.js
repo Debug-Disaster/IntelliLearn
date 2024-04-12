@@ -1,7 +1,8 @@
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button,
 Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Avatar, User, Input} from "@nextui-org/react";
 import {useState, useEffect} from 'react'
-
+import {UserContext} from '../context/UserContext'
+import {useContext} from 'react'
 export const SearchIcon = (props) => (
     <svg
       aria-hidden="true"
@@ -32,12 +33,14 @@ export const SearchIcon = (props) => (
   
 
 export const NavBar = () => {
-    const user = 0;
+    const {user, auth, logout, getUser} = useContext(UserContext)
+    getUser()
+    console.log(user)
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const menuItems = [
-    "Help & Feedback",
-  ];
+    const menuItems = [
+     "Help & Feedback",
+   ];
    return (
         <Navbar maxWidth="full" onMenuOpenChange={setIsMenuOpen} isBordered isBlured>
             <NavbarContent>
