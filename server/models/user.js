@@ -58,7 +58,13 @@ const userSchema = new mongoose.Schema({
     gender : {
         type: String, 
         required: true
-    }
+    },
+    stars :{
+        type: Number,
+    },
+    starVotes : {
+        type: Array,
+    },
 }, {timestamps: true})
 
 module.exports = mongoose.model('user', userSchema)

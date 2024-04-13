@@ -8,6 +8,7 @@ import {useGetUser} from '../hooks/useGetUser'
 import { useGetProfile } from '../hooks/useGetProfile';
 import { useGetMyClasses } from "../hooks/useGetMyClasses";
 import NotFound from './NotFound';
+import star from '../assets/star.png'
 
 export const EyeFilledIcon = (props) => (
     <svg
@@ -89,6 +90,12 @@ const Profil = () => {
         <div className='flex flex-row max-md:flex-col gap-5 m-5 h-[100%]'>
             <div className='flex flex-col w-[40%] max-md:w-[100%] h-[100vh]' style={{backgroundColor:'#272C33', borderRadius:'16px'}}>
                     <div className='mx-auto mt-5'>
+                        {userProfile.role === 'mentor' &&
+                        <div style={{cursor:'pointer', display:'flex', flexDirection:'row'}}>
+                          <p>{userProfile.stars}/5</p>
+                          <img src={star} style={{width:'25px', height:'25px'}}/>
+                        </div>
+                        }
                         <Avatar src={
                             isHovered ? uploadImage : `https://i.pravatar.cc/150?u=a042581f4e29026024d`}
                             onMouseEnter={() => {
@@ -227,6 +234,9 @@ const Profil = () => {
                     }
                     {action==="Classrooms" || action === undefined ?
                     <div style={{overflowY: 'auto', maxHeight: '99%'}}>
+                      {data && data.length === 0 ? <div>
+                        <h1 style={{fontSize:'1.5rem', margin:'0 auto', textAlign:'center', marginTop:'15px'}}>{userProfile.username} does not take part in any classes.</h1>
+                      </div>: <></>}
                       {data && data.map((classroom, index) => {
                     return (
                         <div key={index} onClick={() =>navigate(`/classroom/view/${classroom._id}`)}className="grid gap-4 bg-white rounded-lg overflow-hidden w-[98%] mx-auto shadow-lg dark:bg-gray-900 mt-3">

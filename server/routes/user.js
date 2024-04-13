@@ -30,7 +30,8 @@ router.post('/register', async(req, res) => {
         }
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, salt)    
-        const user = new User({last_name, first_name, email, password: hashedPassword, role, status, school, major, subjects, user_photo, username, gender:'Not set', age: 'Not set', bio: 'Not set', })
+        const user = new User({last_name, first_name, email, password: hashedPassword, role, status, school, major, subjects, user_photo, 
+        username, gender:'Not set', age: 'Not set', bio: 'Not set', stars: 5, starVotes: [{name: 'Alex', star: 5}]})
         await user.save()
         const {primaryToken, refreshToken} = await generateToken(last_name, first_name, email, role)
         res.cookie('refreshToken', refreshToken, {httpOnly: true, sameSite: 'none', secure: true})
@@ -98,4 +99,45 @@ router.get('/getUser/:username', async(req, res) =>{
         res.status(500).json({success: false, error: error.message})
     }
 })
+
+router.post('/giveStars', async(req, res) =>{{
+    try{
+        const {mentor, student, stars} = req.body;
+
+        const verifUser = await User.findOne({
+            starVotes: {
+              $elemMatch: {
+                name: student
+              }
+            }
+          });
+        console.log(verifUser);
+        if(verifUser){
+            return res.status(400).json({success: false, error: 'You have already rated this mentor'});
+        }
+
+        const updatedData = {
+            $addToSet:{
+                starVotes:{name:student, star:stars}
+            },
+        }
+        const Userr = await User.findOneAndUpdate({username: mentor}, updatedData);
+
+        const user = await User.aggregate([
+            { $match: { username: mentor } },
+            { $unwind: "$starVotes" },
+            {
+                $group: {
+                    _id: "$_id",
+                    stars: { $avg: "$starVotes.star" }
+                }
+            }
+        ]);
+
+        res.status(200).json({ success: true});
+        
+    }catch(error){
+        res.status(500).json({success: false, error: error.message});
+    }
+}})
 module.exports = router
