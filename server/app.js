@@ -23,7 +23,7 @@ app.use((req, res, next) => {
     next();
 });
 app.post('/chatbot', async(req, res) => {
-    const prompt = req.body.copyPrompt
+    const {prompt} = req.body;
     try{
         const completion = await client.chat.completions.create({
             messages: [{ role: "system", content: prompt }],
