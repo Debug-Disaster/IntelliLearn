@@ -25,10 +25,26 @@ const classroomSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-/*     password: {
+    password: {
         type: String,
         required: false
-    } */
+    },
+    courses: {
+        type: Array,
+        required: true
+    },
+    classroom_code: {
+        type: String,
+        required: true
+    },
+    assignments: {
+        type: Array,
+        required: true
+    },
+    announcements: {
+        type: Array,
+        required: true
+    }
 }, {timestamps: true})
 
 module.exports = mongoose.model('classroom', classroomSchema)

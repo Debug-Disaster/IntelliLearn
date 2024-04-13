@@ -4,6 +4,7 @@ const classroom = require('../models/clasroom')
 const User = require('../models/user')
 const getUser = require('../utils/getUser')
 const cookie = require('cookie')
+const bcrypt = require('bcrypt')
 router.get('/', async(req, res) => {
     try{
         const cookies = cookie.parse(req.headers.cookie)
@@ -29,7 +30,7 @@ router.get('/:id', async(req, res) => {
 router.post('/publish', async(req, res) => {
     try{
         const cookies = cookie.parse(req.headers.cookie)
-        const {mentor, subject, description, classroom_photo, status} = req.body
+        const {mentor, subject, description, classroom_photo, status, password} = req.body
         if(!mentor || !subject || !description || !classroom_photo || !status){
             return res.status(400).json({success: false, error: 'Please fill in all fields'})
         }
@@ -37,7 +38,9 @@ router.post('/publish', async(req, res) => {
         if(!user){
             return res.status(401).json({success: false, error: 'Unauthorized'})
         }
-        const newClassroom = new classroom({mentor, subject, description, classroom_photo, status})
+        const salt = bcrypt.genSaltSync(10)
+        const hashedPassword = bcrypt.hashSync(password, salt)
+        const newClassroom = new classroom({mentor, subject, description, classroom_photo, status, courses: [], password: hashedPassword, assignments: [], announcements: [], students: []})
         await newClassroom.save()
         return res.status(201).json({success: true, message: 'Classroom published successfully'})
     }catch(err){
