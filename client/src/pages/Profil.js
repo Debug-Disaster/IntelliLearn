@@ -80,6 +80,24 @@ const Profil = () => {
     const {data: userProfile, error, isLoading} = useGetProfile(username);
     const [rating, setRating] = useState(0);
     const [eruare, setEruare] = useState(false);
+    const [photoDialogue, setPhotoDialogue] = useState(false);
+    const [userPhoto, setUserPhoto] = useState('');
+
+    const handlePhotoChange = async () =>{
+      const response = await fetch(`http://localhost:8080/user/updateProfilePhoto`, {
+        method: 'POST',
+        headers:{
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({username: userProfile.username, user_photo: userPhoto})
+      })
+      const json = await response.json();
+      if(!response.ok)
+        console.log(json.error);
+      else{
+        setPhotoDialogue(false);
+      }
+    }
 
     const handleRateMentor = async (rate) =>{
         console.log(rate);
@@ -123,11 +141,17 @@ const Profil = () => {
                           <img src={star} style={{width:'25px', height:'25px'}}/>
                         </div>
                         }
-                        <Avatar src={
-                            isHovered ? uploadImage : `https://i.pravatar.cc/150?u=a042581f4e29026024d`}
+                        <Avatar 
+                            src={
+                            isHovered ? uploadImage : userProfile.user_photo}
                             onMouseEnter={() => {
                                 if(user && user.username === userProfile.username){
                                   setIsHovered(true); 
+                                }
+                            }}
+                            onClick={() => {
+                                if(user && user.username === userProfile.username){
+                                    setPhotoDialogue(true);
                                 }
                             }}
                             onMouseLeave={() => {
@@ -310,6 +334,16 @@ const Profil = () => {
                       </i><i style={{color:'white'}} onClick={() =>handleRateMentor(3)}>★</i>
                       <i style={{color:'white'}} onClick={() =>handleRateMentor(4)}>★</i>
                       <i style={{color:'white'}} onClick={() =>handleRateMentor(5)}>★</i></span>
+                  </div>
+               </ModalContent>
+            </Modal>
+            <Modal isOpen={photoDialogue} onClose={()=>setPhotoDialogue(false)}>
+               <ModalContent className='p-5 flex' style={{backgroundColor:'#586475', alignItems:'center'}}>
+                <ModalHeader>Profile photo</ModalHeader>
+                  <div className='flex flex-col gap-5'>
+                    <p>Insert link (Imgur/Postimage)</p>
+                    <Input variant="bordered" placeholder="Link" value={userPhoto} onChange={(e) => setUserPhoto(e.target.value)}/>
+                    <Button color="success" variant="solid" onClick={() =>handlePhotoChange()}> Apply </Button>
                   </div>
                </ModalContent>
             </Modal>

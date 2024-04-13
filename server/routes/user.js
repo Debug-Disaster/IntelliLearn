@@ -31,7 +31,7 @@ router.post('/register', async(req, res) => {
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, salt)    
         const user = new User({last_name, first_name, email, password: hashedPassword, role, status, school, major, subjects, user_photo, 
-        username, gender:'Not set', age: 'Not set', bio: 'Not set', stars: 5, starVotes: [{name: 'Alex', star: 5}]})
+        username, gender:'Not set', age: 'Not set', bio: 'Not set', stars: 5, starVotes: [{name: 'Alex', star: 5}], user_photo: username})
         await user.save()
         const {primaryToken, refreshToken} = await generateToken(last_name, first_name, email, role)
         res.cookie('refreshToken', refreshToken, {httpOnly: true, sameSite: 'none', secure: true})
@@ -142,4 +142,15 @@ router.post('/giveStars', async(req, res) =>{{
         res.status(500).json({success: false, error: error.message});
     }
 }})
+
+router.post('/updateProfilePhoto', async(req, res) =>{
+    try{
+        const {username, user_photo} = req.body;
+        const user = await User.findOneAndUpdate({ username: username}, {user_photo: user_photo})
+        console.log(user);
+        res.status(200).json({ success: true});
+    }catch(error){
+        res.status(500).json({success: false, error: error.message});
+    }
+})
 module.exports = router

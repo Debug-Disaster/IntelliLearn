@@ -108,7 +108,7 @@ export const NavBar = () => {
                         isBordered
                         as="button"
                         className="transition-transform"
-                        src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                        src={`${user.user_photo}`}
                     />
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Profile Actions" variant="flat">
