@@ -32,16 +32,20 @@ const MyClasses = () => {
                     <h3 className="text-sm font-medium">Details</h3>
                     <dl className="grid gap-1 text-sm">
                         <div className="flex justify-between">
-                        <dt className="font-medium">Starts</dt>
-                        <dd>May 3, 2023</dd>
+                        <dt className="font-medium">Created at</dt>
+                        <dd>April 3, 2024</dd>
                         </div>
                         <div className="flex justify-between">
-                        <dt className="font-medium">Duration</dt>
-                        <dd>6 weeks</dd>
+                        <dt className="font-medium">Status</dt>
+                        <dd>Public</dd>
                         </div>
                         <div className="flex justify-between">
-                        <dt className="font-medium">Effort</dt>
-                        <dd>3-5 hours per week</dd>
+                        <dt className="font-medium">Undone assignments</dt>
+                        <dd>2</dd>
+                        </div>
+                        <div className="flex justify-between">
+                        <dt className="font-medium">Participants</dt>
+                        <dd>7</dd>
                         </div>
                     </dl>
                     </div>
@@ -77,16 +81,20 @@ const MyClasses = () => {
                     <h3 className="text-sm font-medium">Details</h3>
                     <dl className="grid gap-1 text-sm">
                         <div className="flex justify-between">
-                        <dt className="font-medium">Starts</dt>
-                        <dd>May 3, 2023</dd>
+                        <dt className="font-medium">Created at</dt>
+                        <dd>April 3, 2024</dd>
                         </div>
                         <div className="flex justify-between">
-                        <dt className="font-medium">Duration</dt>
-                        <dd>6 weeks</dd>
+                        <dt className="font-medium">Status</dt>
+                        <dd>Public</dd>
                         </div>
                         <div className="flex justify-between">
-                        <dt className="font-medium">Effort</dt>
-                        <dd>3-5 hours per week</dd>
+                        <dt className="font-medium">Undone assignments</dt>
+                        <dd>2</dd>
+                        </div>
+                        <div className="flex justify-between">
+                        <dt className="font-medium">Participants</dt>
+                        <dd>7</dd>
                         </div>
                     </dl>
                     </div>
@@ -125,16 +133,20 @@ const MyClasses = () => {
                     <h3 className="text-sm font-medium">Details</h3>
                     <dl className="grid gap-1 text-sm">
                         <div className="flex justify-between">
-                        <dt className="font-medium">Starts</dt>
-                        <dd>May 3, 2023</dd>
+                        <dt className="font-medium">Created at</dt>
+                        <dd>April 3, 2024</dd>
                         </div>
                         <div className="flex justify-between">
-                        <dt className="font-medium">Duration</dt>
-                        <dd>6 weeks</dd>
+                        <dt className="font-medium">Status</dt>
+                        <dd>Public</dd>
                         </div>
                         <div className="flex justify-between">
-                        <dt className="font-medium">Effort</dt>
-                        <dd>3-5 hours per week</dd>
+                        <dt className="font-medium">Undone assignments</dt>
+                        <dd>2</dd>
+                        </div>
+                        <div className="flex justify-between">
+                        <dt className="font-medium">Participants</dt>
+                        <dd>7</dd>
                         </div>
                     </dl>
                     </div>
@@ -170,16 +182,20 @@ const MyClasses = () => {
                     <h3 className="text-sm font-medium">Details</h3>
                     <dl className="grid gap-1 text-sm">
                         <div className="flex justify-between">
-                        <dt className="font-medium">Starts</dt>
-                        <dd>May 3, 2023</dd>
+                        <dt className="font-medium">Created at</dt>
+                        <dd>April 3, 2024</dd>
                         </div>
                         <div className="flex justify-between">
-                        <dt className="font-medium">Duration</dt>
-                        <dd>6 weeks</dd>
+                        <dt className="font-medium">Status</dt>
+                        <dd>Public</dd>
                         </div>
                         <div className="flex justify-between">
-                        <dt className="font-medium">Effort</dt>
-                        <dd>3-5 hours per week</dd>
+                        <dt className="font-medium">Undone assignments</dt>
+                        <dd>2</dd>
+                        </div>
+                        <div className="flex justify-between">
+                        <dt className="font-medium">Participants</dt>
+                        <dd>7</dd>
                         </div>
                     </dl>
                     </div>
