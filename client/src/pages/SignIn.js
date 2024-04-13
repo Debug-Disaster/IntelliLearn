@@ -103,7 +103,7 @@ const SignIn = () => {
     return (
         <div style={{display:'flex', backgroundColor: '#0F0E0E'}}>
         <form className='signUp-div signindiv'>
-            {error && <Error message={error} />}
+            {error && <Error error={error} />}
             <p className='signUp-create-account-text'>
                 SIGN-IN
             </p>
