@@ -33,7 +33,6 @@ router.post('/register', async(req, res) => {
         const user = new User({last_name, first_name, email, password: hashedPassword, role, status, school, major, subjects, user_photo, username})
         await user.save()
         const {primaryToken, refreshToken} = await generateToken(last_name, first_name, email, role)
-        console.log(primaryToken, refreshToken)
         res.cookie('refreshToken', refreshToken, {httpOnly: true, sameSite: 'none', secure: true})
         res.cookie('primaryToken', primaryToken, {httpOnly: true, sameSite: 'none', secure: true})
         res.status(201).json({success: true, message: 'User created successfully'})

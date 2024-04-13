@@ -6,6 +6,11 @@ const getUser = require('../utils/getUser')
 const cookie = require('cookie')
 router.get('/', async(req, res) => {
     try{
+        const cookies = cookie.parse(req.headers.cookie)
+        const {user} = await getUser(cookies.primaryToken, cookies.refreshToken)
+        if(!user){
+            return res.status(401).json({success: false, error: 'Unauthorized'})
+        }
         const classrooms = await classroom.find({})
         return res.status(200).json({success: true, classrooms})
     }catch(err){
@@ -69,5 +74,27 @@ router.delete('/delete/:id', async(req, res) => {
         return res.status(500).json({success: false, error: 'Internal Server Error'})
     }
 })
-///
+router.post('/join/:id', async(req, res) => {
+    try{
+        const cookies = cookie.parse(req.headers.cookie)
+        const classroomId = req.params.id
+        const {user} = await getUser(cookies.primaryToken, cookies.refreshToken)
+        if(!user){
+            return res.status(401).json({success: false, error: 'Unauthorized'})
+        }
+        const classroomData = await classroom.findOne({_id: classroomId})
+        if(!classroomData){
+            return res.status(404).json({success: false, error: 'Classroom not found'})
+        }
+        if(classroomData.students.includes(user.username)){
+            return res.status(400).json({success: false, error: 'You have already joined this classroom'})
+        }
+        user.classrooms.push(classroomId)
+        await user.save()
+        await classroom.findOneAndUpdate({_id: classroomId}, {$push: {students: user.username}})
+        return res.status(200).json({success: true, message: 'You have joined the classroom'})
+    }catch(err){
+        return res.status(500).json({success: false, error: 'Internal Server Error'})
+    }
+})
 module.exports = router

@@ -42,7 +42,19 @@ const userSchema = new mongoose.Schema({
     username : {
         type: String,
         required: true
-    }
+    },
+    classrooms : {
+        type: Array,
+        required: true
+    },
+    bio : {
+        type: String,
+        required: true
+    },
+    tags : {
+        type: Array,
+        required: true
+    },
 }, {timestamps: true})
 
 module.exports = mongoose.model('user', userSchema)
