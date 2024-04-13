@@ -8,10 +8,10 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import { CreateClassroom } from "./pages/CreateClassroom";
 import Profil from "./pages/Profil";
+import {Classroom as SecondClassroom} from "./components/Classroom";
 import Classroom from "./pages/Classroom";
 import JoinClassroom from "./pages/JoinClassroom";
 import MyClasses from "./pages/MyClasses";
-import ViewClassroom from "./viewClassroom";
 function App() {
   return (
     <BrowserRouter>
@@ -59,8 +59,12 @@ function App() {
             element={<MyClasses/>}
           />
           <Route
-            path="/classroom/:classroomId"
-            element={<ViewClassroom/>}
+            path="/classroom"
+            element={<Classroom/>}
+          />
+          <Route
+            path="/classroom/view/:id"
+            element={<SecondClassroom/>}
           />
         </Routes>
       </main>
