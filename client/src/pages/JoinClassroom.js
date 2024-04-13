@@ -1,36 +1,39 @@
 import { Modal, ModalHeader, useDisclosure, ModalContent, Button } from '@nextui-org/react'
 import { useGetClassrooms } from '../hooks/useGetClassrooms'
 import { useState } from 'react'
-const onJoinClassroom = async(id) => {
-    try {
-        const request = await fetch(`http://localhost:8080/classroom/join/${id}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            credentials: 'include'
-        })
-        const response = await request.json()
-        if(response.error) {
-            console.error(response.error)
-        }
-        if(response.message) {
-            console.log(response.message)
-        }
-    }catch(err) {
-        console.error(err)
-    }
-}
+import Error from '../components/Error'
 const JoinClassroom = () => {
     const {data, error, loading} = useGetClassrooms()
     const [clickedCourse, setClickedCourse] = useState(null)
     const {isOpen, onClose, onOpenChange, onOpen} = useDisclosure()
+    const [errora, setError] = useState('')
+    const onJoinClassroom = async(id) => {
+        try {
+            const request = await fetch(`http://localhost:8080/classroom/join/${id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include'
+            })
+            const response = await request.json()
+            console.log(response)
+            if(response.error) {
+                setError(response.error)
+            }
+            if(response.message) {
+                console.log(response.message)
+            }
+        }catch(err) {
+            console.error(err)
+        }
+    }
     return (
         <div className='container mx-auto h-[100vh] mt-10'>
+            {errora && <Error error={errora} />}
             <h1 className='text-4xl'>Join a classroom</h1>
             <div className='grid grid-cols-3 gap-4 mt-5'>
                 {loading && <p>Loading...</p>}
-                {error && <p>Error: {error.message}</p>}
                 {data && data.map(classroom => {
                     return (
                         <div onClick={() => {setClickedCourse(classroom); onOpen()}} key={classroom._id} className='bg-white p-4 rounded-md shadow-md'>

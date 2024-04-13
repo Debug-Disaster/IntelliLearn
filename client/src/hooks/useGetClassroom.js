@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 export const useGetClassrooms = (id) => {
-  const fetchClassrooms = async (id) => {
-    const req = await fetch(`http://localhost:8080/classroom/id`, {
+  const fetchClassrooms = async () => {
+    const req = await fetch(`http://localhost:8080/classroom/${id}`, {
       method: "GET",
       credentials: "include",
     });

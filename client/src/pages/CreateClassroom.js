@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import {Button, Checkbox, CheckboxGroup, Input, Textarea} from '@nextui-org/react'
+import Error  from "../components/Error";
 import { useState } from "react";
 export const CreateClassroom = () => {
     const {user} = useContext(UserContext)
@@ -40,6 +41,7 @@ export const CreateClassroom = () => {
     }
     return (
         <div className="container flex flex-col mx-auto mt-10 h-[100vh]">
+            {error && <Error error={error} />}
             <h1 className="text-4xl font-bold mb-5">Create Classroom</h1>
             <form onSubmit={(e) => publishClassroom(e)} className="flex flex-col gap-5">
                 <CheckboxGroup orientation="horizontal">
