@@ -9,12 +9,9 @@ const Profil = () => {
     const [isHovered, setIsHovered] = useState(false);
     const {username} = useParams();
     const {data: userProfile, error, isLoading} = useGetProfile(username);
-<<<<<<< Updated upstream
     console.log(userProfile);
     if(!userProfile)
         return <NotFound/>
-=======
->>>>>>> Stashed changes
     return (
         <div className='flex flex-row max-md:flex-col gap-5 m-5 h-[100%]'>
             <div className='flex flex-col w-[40%] max-md:w-[100%] h-[100vh]' style={{backgroundColor:'#272C33', borderRadius:'16px'}}>
