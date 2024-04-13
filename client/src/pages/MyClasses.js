@@ -7,9 +7,13 @@ import {useNavigate} from 'react-router-dom';
 const MyClasses = () => {
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
-    const { data, error, isLoading } = useGetMyClasses(user ? user.username : "")
-    console.log(data)
-    if (!user) return <NotFound/>
+    const { data, error, isLoading } = useGetMyClasses(user ? user.username : "");
+    if(isLoading)
+        return <div>Loading...</div>
+    if(!user)
+        return <NotFound/>
+    if(!data)
+        return <NotFound/>
     return (
 /*         <div className="view-your-classes">
             <div style={{width:'50%'}}>
