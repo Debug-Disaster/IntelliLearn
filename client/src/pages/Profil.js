@@ -1,5 +1,5 @@
 import {useParams, Link, useNavigate} from 'react-router-dom';
-import {Avatar, Button, Chip, Input} from "@nextui-org/react";
+import {Avatar, Button, Chip, Input, Modal, ModalContent, ModalHeader, useDisclosure} from "@nextui-org/react";
 import uploadImage from '../assets/uploadImage.png'
 import {useEffect, useState} from 'react'
 import {useContext} from 'react'
@@ -70,17 +70,19 @@ const Profil = () => {
     const navigate = useNavigate(); 
     const [isVisible, setIsVisible] = useState(false)
     const toggleVisibility = () => setIsVisible(!isVisible);
-
+    const {isOpen, onOpen, onClose, onOpenChange} = useDisclosure()
     const [isVisible2, setIsVisible2] = useState(false);
     const toggleVisibility2 = () => setIsVisible2(!isVisible2);
     const [isHovered, setIsHovered] = useState(false);
     const {username, action} = useParams();
     const {user} = useContext(UserContext);
     const {data: userProfile, error, isLoading} = useGetProfile(username);
-    console.log(userProfile);
-;
-    const { data } = useGetMyClasses(user ? user.username : "");
+    const [rating, setRating] = useState(0);
 
+    const handleClick = (rate) => {
+        setRating(rate);
+    };
+    const { data } = useGetMyClasses(user ? user.username : "");
     if(!userProfile)
         return <NotFound/>
     console.log(action);
@@ -91,7 +93,7 @@ const Profil = () => {
             <div className='flex flex-col w-[40%] max-md:w-[100%] h-[100vh]' style={{backgroundColor:'#272C33', borderRadius:'16px'}}>
                     <div className='mx-auto mt-5'>
                         {userProfile.role === 'mentor' &&
-                        <div style={{cursor:'pointer', display:'flex', flexDirection:'row'}}>
+                        <div onClick={onOpen} style={{cursor:'pointer', display:'flex', flexDirection:'row'}}>
                           <p>{userProfile.stars}/5</p>
                           <img src={star} style={{width:'25px', height:'25px'}}/>
                         </div>
@@ -272,6 +274,15 @@ const Profil = () => {
                     }
                 </div>
             </div>
+            <Modal isOpen={isOpen} onOpenChange={onOpenChange} onClose={onClose}>
+               <ModalContent className='p-5'>
+                <ModalHeader>Rating</ModalHeader>
+                  <div className='flex flex-col gap-5'>
+                    <p>Rate your mentor</p>
+                      <span class="rate"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></span>
+                  </div>
+               </ModalContent>
+            </Modal>
         </div>
     );
 }

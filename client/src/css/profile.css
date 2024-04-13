@@ -1,33 +1,37 @@
-.divProfil-rest{
+:root {
+    --star-color: #222;
+    --star-hover-color: #fc0;
+}
+.divProfil-rest {
     height: calc(96% - 50px);
     background-color: #272C33;
     border-radius: 16px;
 }
 
-.contains-tags-profile{
+.contains-tags-profile {
     border-bottom: 50px solid #0F0E0E;
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
     padding-bottom: 20px;
-    gap:10px;
+    gap: 10px;
 }
 
-.info-profile-div{
+.info-profile-div {
     display: flex;
     flex-direction: row;
-    gap:20px;
+    gap: 20px;
     cursor: pointer;
     transition: ease-out;
-    transition-duration:150ms ;
+    transition-duration: 150ms;
     border-color: rgb(0, 140, 255);
-    background:#1b1e22;
-    border-width:1px;
-    padding:2px 4px 2px 4px;
+    background: #1b1e22;
+    border-width: 1px;
+    padding: 2px 4px 2px 4px;
     border-radius: 10px;
 }
 
-.navbar-profile{
+.navbar-profile {
     width: 80%;
     height: 100%;
     margin: 0 auto;
@@ -38,6 +42,32 @@
     font-size: 1.2rem;
 }
 
-.navbar-profile div{
-    cursor:pointer;
+.navbar-profile div {
+    cursor: pointer;
+}
+.rate i {
+    color: var(--star-color);
+    text-shadow: none;
+    transition: color 200ms, text-shadow 200ms;
+    transition-delay: 0;
+    cursor: pointer;
+    font-style: normal;
+}
+
+.rate i:hover ~ i {
+    color: var(--star-color);
+    text-shadow: none;
+}
+
+.rate:hover i {
+    color: var(--star-hover-color);
+    text-shadow: var(--star-hover-color) 0 0 20px;
+}
+
+.rate:hover i:nth-child(n) {
+    transition-delay: calc(30ms * var(--n));
+}
+.rate i.rated {
+    color: var(--star-hover-color);
+    text-shadow: var(--star-hover-color) 0 0 20px;
 }
