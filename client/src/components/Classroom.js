@@ -27,16 +27,20 @@ export const Classroom = () => {
                 <CardBody>
                     <p className="font-semibold text-lg">Classroom subject: {classroom.subject}</p>
                     <p className="font-semibold text-lg">Classroom description: <br></br> {classroom.description}</p>
-                    <p className="font-semibold text-3xl">The enrolled students:</p>
+                    <p className="font-semibold text-3xl mt-5">The enrolled students:</p>
                     <Table>
                         <TableHeader>
                             <TableColumn>Username</TableColumn>
                         </TableHeader>
                         <TableBody>
-                            {classroom.studens && classroom.students.map(student => (
+                            {classroom.students && classroom.students.map((student) => (
                                 <TableRow key={student}>
                                     <TableCell>
-                                        <Link to={`/profile/${student}`}>{student}</Link>
+                                        {student !== classroom.mentor ? (
+                                            <Link to={`/profile/${student}`}>{student}</Link>
+                                        ) : (
+                                            <span></span>
+                                        )}
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -47,7 +51,7 @@ export const Classroom = () => {
             <div style={{display:'flex', flexDirection:'row', gap:'20px', alignItems:'center'}} className="mt-6">
                 <h1 className="font-extrabold text-4xl" >Classwork</h1>
                 {user.username === classroom.mentor &&
-                <Button onClick={() => navigate(`/classroom/${id}/new/assignment`)} color="default" type = "submit" variant="bordered" size='sm' style={{marginTop:'5px'}}>
+                <Button onClick={() => navigate(`/classrooms/${id}/new/assignment`)} color="default" type = "submit" variant="bordered" size='sm' style={{marginTop:'5px'}}>
                     Post assignment
                 </Button>
                 }

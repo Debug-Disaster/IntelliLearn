@@ -42,7 +42,7 @@ function App() {
             element={<SignUp/>}
           />
           <Route
-            path="/classroom/create"
+            path="/classrooms/create"
             element={<CreateClassroom/>}
           />
           <Route
@@ -54,31 +54,27 @@ function App() {
             element={<Profil/>}
           />
           <Route
-            path="/classroom"
+            path="/classrooms"
             element={<Classroom/>}
           />
           <Route
-            path="/classroom/join"
+            path="/classrooms/join"
             element={<JoinClassroom/>}
           />
           <Route
-            path="/classroom/myclasses"
+            path="/classrooms/myclasses"
             element={<MyClasses/>}
           />
           <Route
-            path="/classroom"
-            element={<Classroom/>}
-          />
-          <Route
-            path="/classroom/view/:id"
+            path="/classrooms/view/:id"
             element={<SecondClassroom/>}
           />
           <Route
-            path="/classroom/:id/new/assignment"
+            path="/classrooms/:id/new/assignment"
             element={<PostAssignment/> }  
           />
           <Route
-            path="/classroom/:id/assignment/:index"
+            path="/classrooms/:id/assignment/:index"
             element={<Assignment/>}
           />
           <Route

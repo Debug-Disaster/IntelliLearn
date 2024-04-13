@@ -9,15 +9,15 @@ const Classroom = () => {
     return (
         <div>
         <div className="select-classroom-category">
-            <div onClick={() => navigate('/classroom/myclasses')}>
+            <div onClick={() => navigate('/classrooms/myclasses')}>
                 <Avatar style={{marginTop:'-75px', marginBottom:'20px'}}radius="sm" isBordered src={myClassrooms} className="w-60 h-60 text-large"/>
                 <p>Your classrooms</p>
             </div>
-            <div onClick={() => navigate('/classroom/join')}>
+            <div onClick={() => navigate('/classrooms/join')}>
                 <Avatar style={{marginTop:'-75px', marginBottom:'20px'}}radius="sm" isBordered src={joinClassroom} className="w-60 h-60 text-large"/>
                 <p>Join classroom</p>
             </div>
-            <div onClick={() => navigate('/classroom/create')}>
+            <div onClick={() => navigate('/classrooms/create')}>
                 <Avatar style={{marginTop:'-75px', marginBottom:'20px'}}radius="sm" isBordered src={mentor} className="w-60 h-60 text-large"/>
                 <p>Create classroom</p>
             </div>
@@ -29,13 +29,13 @@ const Classroom = () => {
                     <p> Your classrooms</p>
                 </div>
             </div>
-            <div onClick={() => navigate('/classroom/join')}>
+            <div onClick={() => navigate('/classrooms/join')}>
                 <div className='tomodifyclassrooms' style={{width:'80%', display:'flex', justifyContent:'space-between'}}>
                     <Avatar radius="sm" isBordered src={joinClassroom} className="w-40 h-40 text-large"/>
                     <p> Join classroom</p>
                 </div>
             </div>
-            <div onClick={() => navigate('/classroom/create')}>
+            <div onClick={() => navigate('/classrooms/create')}>
                 <div className='tomodifyclassrooms' style={{width:'80%', display:'flex', justifyContent:'space-between'}}>
                     <Avatar radius="sm" isBordered src={mentor} className="w-40 h-40 text-large"/>
                     <p> Create classroom</p>

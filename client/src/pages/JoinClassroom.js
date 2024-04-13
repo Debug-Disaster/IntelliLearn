@@ -1,9 +1,11 @@
 import { Modal, ModalHeader, useDisclosure, ModalContent, Button, Input } from '@nextui-org/react'
 import { useGetClassrooms } from '../hooks/useGetClassrooms'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Error from '../components/Error'
+import { UserContext } from '../context/UserContext'
 const JoinClassroom = () => {
     const {data, error, loading} = useGetClassrooms()
+    const {user} = useContext(UserContext)
     const [clickedCourse, setClickedCourse] = useState(null)
     const {isOpen, onClose, onOpenChange, onOpen} = useDisclosure()
     const [errora, setError] = useState('')
@@ -37,12 +39,14 @@ const JoinClassroom = () => {
             <div className='grid grid-cols-3 gap-4 mt-5'>
                 {loading && <p>Loading...</p>}
                 {data && data.map(classroom => {
-                    return (
+                    {classroom.mentor !== user.username ? (
                         <div onClick={() => {setClickedCourse(classroom); onOpen()}} key={classroom._id} className='bg-white p-4 rounded-md shadow-md'>
                             <h1 className='font-extrabold text-3xl text-black'>{classroom.subject}</h1>
                             <p className='text-black'>{classroom.description}</p>
                         </div>
-                    )
+                    ): (
+                        <span></span>
+                    )}
                 })}
             </div>
             {clickedCourse && 

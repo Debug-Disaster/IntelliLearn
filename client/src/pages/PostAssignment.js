@@ -6,6 +6,7 @@ import NotFound from './NotFound';
 import { UserContext } from '../context/UserContext';
 import { Button } from '@nextui-org/react';
 import Error from '../components/Error';
+import { useNavigate } from 'react-router-dom';
 export const PostAssignment = () => {
     const {id} = useParams()
     const [title, setTitle] = useState("")
@@ -14,6 +15,7 @@ export const PostAssignment = () => {
     //fix const [dueDate, setDueDate] = useState("")
     const [content, setContent] = useState("")
     const {user} = useContext(UserContext)
+    const navigate = useNavigate()
     if(!user || !user.role == 'mentor'){
         return <NotFound/>
     }
@@ -36,8 +38,13 @@ export const PostAssignment = () => {
                 })
             })
             const data = await res.json()
-            if(!res.success){
+            if(res.success === false){
                 setError(data.error)
+            }else{
+                setContent("")
+                setDescription("")
+                setTitle("")
+                navigate(`/classrooms/view/${id}`)
             }
         }catch(err){
             console.log(err)

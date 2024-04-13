@@ -57,7 +57,7 @@ export const NavBar = () => {
 
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <NavbarItem>
-                <Link color="foreground" style={{cursor:'pointer'}} onClick={() => navigate('/classroom')}>
+                <Link color="foreground" style={{cursor:'pointer'}} onClick={() => navigate('/classrooms')}>
                     Classrooms
                 </Link>
                 </NavbarItem>

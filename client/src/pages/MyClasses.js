@@ -3,7 +3,7 @@ import {UserContext} from "../context/UserContext";
 import { useGetMyClasses } from "../hooks/useGetMyClasses";
 import NotFound from "./NotFound"
 import Error from "../components/Error";
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 const MyClasses = () => {
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
@@ -220,13 +220,13 @@ const MyClasses = () => {
             </div>
         </div> */
         <div>
-            <h1 className="text-4xl font-bold m-10">The classes you are enrolled in:</h1>
+            {data.length === 0 ? <h1 className="text-4xl font-bold m-10">You have no classes yet. Would you like to enroll in classes? <Link className="text-indigo-400" to={'/classrooms/join'}>Click here!</Link></h1> : <h1 className="text-4xl font-bold m-10"> This is where you found the classes you enrolled in! </h1>}
             <div className="container mx-auto h-[100vh] my-5 grid grid-cols-2 gap-5">
                 {error && <Error error={error} />}
                 {isLoading && <h1>Loading...</h1>}
                 {data && data.map((classroom, index) => {
                     return (
-                        <div key={index} onClick={() =>navigate(`/classroom/view/${classroom._id}`)}className="grid gap-4 bg-white rounded-lg overflow-hidden w-full shadow-lg dark:bg-gray-900">
+                        <div key={index} onClick={() =>navigate(`/classrooms/view/${classroom._id}`)}className="grid gap-4 bg-white rounded-lg overflow-hidden w-full shadow-lg dark:bg-gray-900">
                             <div className="p-4 grid gap-2">
                                 <h2 className="text-lg font-semibold">{classroom.subject}</h2>
                                 <p className="text-sm text-gray-500 dark:text-gray-400">{classroom.description}</p>
