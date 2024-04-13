@@ -14,6 +14,7 @@ const MinaAi = () => {
     if(!user) return <NotFound/>
     //loading, save prompts, display prompts (user prompt, mina prompt, user prompt, mina prompt, ...)
     const getPrompt = async() => {
+        prompts.push(prompt)
         try{
             const res = await fetch('http://localhost:8080/chatbot', {
                 method: 'POST',

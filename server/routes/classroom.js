@@ -42,6 +42,8 @@ router.post('/publish', async(req, res) => {
         const hashedPassword = bcrypt.hashSync(password, salt)
         const newClassroom = new classroom({mentor, subject, description, classroom_photo, status, courses: [], password: hashedPassword, assignments: [], announcements: [], students: []})
         await newClassroom.save()
+        user.classrooms.push(newClassroom)
+        await user.save()
         return res.status(201).json({success: true, message: 'Classroom published successfully'})
     }catch(err){
         return res.status(500).json({success: false, error: err.message})
@@ -129,7 +131,11 @@ router.get('/myclasses/:username', async(req, res) => {
             return res.status(404).json({success: false, error: 'User not found'})
         }
         const classrooms = await classroom.find({students: user.username}).select('-password')
-        return res.status(200).json({success: true, classrooms})
+        if(!classrooms || classrooms.length === 0){
+            return res.status(200).json({success: true, classrooms: user.classrooms})
+        }else{
+            return res.status(200).json({success: true, classrooms})
+        }
     }catch(err){
         return res.status(500).json({success: false, error: err.message})
     }

@@ -6,6 +6,9 @@ const cookieParser = require('cookie-parser')
 const classroomRouter = require('./routes/classroom')
 const openai = require('openai');
 const client = new openai.OpenAI({apiKey: process.env.OpenAI})
+const User = require('./models/user')
+const geUser = require('./utils/getUser')
+const cookie = require('cookie');
 app.use(express.json()) 
 app.use(cookieParser())
 const cors = require('cors')
@@ -24,11 +27,25 @@ app.use((req, res, next) => {
 });
 app.post('/chatbot', async(req, res) => {
     const {prompt} = req.body;
+    const cookies = cookie.parse(req.headers.cookie);
+    if(!cookies || !cookies.primaryToken || !cookies.refreshToken){
+        return res.status(401).json({error: 'Unauthorized'})
+    }
+    const user = await geUser(cookies.primaryToken, cookies.refreshToken);
+    if(!user){
+        return res.status(401).json({error: 'Unauthorized'})
+    }
+    const usera = await User.findOne({username: user.username});
+    if(!usera){
+        return res.status(401).json({error: 'Unauthorized'})
+    }
+    usera.prompts.push(prompt)
     try{
         const completion = await client.chat.completions.create({
             messages: [{ role: "system", content: prompt }],
             model: "gpt-3.5-turbo",
           });
+        usera.prompts.push(completion.choices[0].message.content)
           res.status(200).json({message: completion.choices[0].message.content})
     }catch(error){
         res.status(500).json({ error: error.message });
