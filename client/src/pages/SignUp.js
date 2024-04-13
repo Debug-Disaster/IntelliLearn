@@ -144,16 +144,34 @@ const SignUp = () => {
             {!role &&
             <div className="dialog-signup">
                 <div onClick={() => getRole("student")}>
-                    <div>
+                    <div className='dialog-signup-div'>
                         <Avatar style={{marginTop:'-75px', marginBottom:'20px'}} radius="sm" isBordered src={student} className="w-60 h-60 text-large" />
                         <p>Student</p>
                         <p>A secure environment for learning</p>
                     </div>
                 </div>
-                <div onClick={() => getRole("mentor")}>
+                <div className='dialog-signup-div' onClick={() => getRole("mentor")}>
                     <div>
                         <Avatar style={{marginTop:'-75px', marginBottom:'20px'}}radius="sm" isBordered src={mentor} className="w-60 h-60 text-large" />
                         <p>Mentor</p>
+                        <p>A secure environment for teaching</p>
+                    </div>
+                </div>
+            </div>
+            }
+            {!role &&
+            <div className='dialog-signup-mb'  style={{display:'none'}}>
+                <div className='dialog-signup-div-mb' onClick={() => getRole("student")}>
+                    <div>
+                        <Avatar radius="sm" isBordered src={student} className="w-40 h-40 text-large mx-auto" />
+                        <p style={{textAlign:'center'}} className='mt-2'>Student</p>
+                        <p>A secure environment for learning</p>
+                    </div>
+                </div>
+                <div className='dialog-signup-div-mb' onClick={() => getRole("mentor")}>
+                    <div>
+                        <Avatar radius="sm" isBordered src={mentor} className="w-40 h-40 text-large mx-auto" />
+                        <p style={{textAlign:'center'}} className='mt-2'>Mentor</p>
                         <p>A secure environment for teaching</p>
                     </div>
                 </div>
