@@ -1,6 +1,5 @@
 import {useParams, Link} from 'react-router-dom';
 import {Avatar} from "@nextui-org/react";
-import { useState } from 'react';
 import uploadImage from '../assets/uploadImage.png'
 import {useEffect, useState} from 'react'
 
