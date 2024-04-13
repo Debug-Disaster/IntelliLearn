@@ -104,26 +104,26 @@ const MinaAi = () => {
                     <p style={{fontSize:'1.2rem'}}>
                         Mina ignites minds with wisdom, making everything brighter...
                     </p>
-                    <div className="flex w-[80%] mx-auto flex-row justify-between mt-12">
+                    <div className="flex w-[100%] mx-auto flex-row justify-evenly mt-12 mina-contains-prompt-ideas">
                         <div className="prompt-ideas-mina" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
                             <div className="pl-4 pt-2 pr-4">
                                 <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             </div>
-                            <SendIcon className="pb-3 pr-4" style={{width:'40px', height:'40px', cursor:'pointer'}}/>
+                            <SendIcon className="pb-3 pr-4 iconitaSend" style={{width:'40px', height:'40px', cursor:'pointer'}}/>
                         </div>
                         <div className="prompt-ideas-mina" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
                             <div className="pl-4 pt-2 pr-4">
                                 <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             </div>
-                            <SendIcon className="pb-3 pr-4" style={{width:'40px', height:'40px', cursor:'pointer'}}/>
+                            <SendIcon className="pb-3 pr-4 iconitaSend" style={{width:'40px', height:'40px', cursor:'pointer'}}/>
                         </div>
-                        <div className="prompt-ideas-mina" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                        <div className="prompt-ideas-mina prompt-hidden-mina" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
                             <div className="pl-4 pt-2 pr-4">
                                 <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             </div>
                             <SendIcon className="pb-3 pr-4" style={{width:'40px', height:'40px', cursor:'pointer'}}/>
                         </div>
-                        <div className="prompt-ideas-mina" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                        <div className="prompt-ideas-mina prompt-hidden-mina" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
                             <div className="pl-4 pt-2 pr-4">
                                 <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             </div>

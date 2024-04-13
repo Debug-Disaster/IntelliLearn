@@ -115,7 +115,7 @@ export const NavBar = () => {
                     <DropdownItem key="profil" onClick={() => navigate(`/profile/${user.username}`)}>
                         View profile
                     </DropdownItem>
-                    <DropdownItem key="settings">
+                    <DropdownItem key="settings" onClick={()=>navigate(`/profile/${user.username}/Settings`)}>
                         Settings
                     </DropdownItem>
                     <DropdownItem key="logout" color="danger" onClick={logout}>
