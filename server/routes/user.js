@@ -88,4 +88,17 @@ router.post('/logout', async(req, res) => {
         res.status(500).json({success: false, error: error.message})
     }
 })
+router.post('/getUser', async(req, res) =>{
+    try{
+        const {username} = req.body;
+        const user = await User.findOne({username}).select('-id -password');
+        if(!user){
+            return res.status(400).json({success: false, error: 'Invalid user'})
+        }
+        console.log(user);
+        res.status(200).json({user})
+    }catch(error){
+        res.status(500).json({success: false, error: error.message})
+    }
+})
 module.exports = router

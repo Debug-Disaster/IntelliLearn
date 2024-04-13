@@ -2,10 +2,28 @@ import {useParams, Link} from 'react-router-dom';
 import {Avatar} from "@nextui-org/react";
 import { useState } from 'react';
 import uploadImage from '../assets/uploadImage.png'
+import {useEffect, useState} from 'react'
 
 const Profil = () => {
     const [isHovered, setIsHovered] = useState(false);
     const {username} = useParams();
+
+    useEffect(() =>{
+        const verifyUser = async () =>{
+            try{
+                const response = await fetch('http://localhost:8080/user/getUser', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({username})
+                });
+                const data = await response.json();
+                console.log(data)
+            }catch(error){
+                console.log(error)
+            }
+        }
+
+    }, []);
     return (
         <div className='contains-profile'>
             <div className='profile-principal'>
