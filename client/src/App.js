@@ -12,6 +12,7 @@ import {Classroom as SecondClassroom} from "./components/Classroom";
 import Classroom from "./pages/Classroom";
 import JoinClassroom from "./pages/JoinClassroom";
 import MyClasses from "./pages/MyClasses";
+import { PostAssignment } from "./pages/PostAssignment";
 function App() {
   return (
     <BrowserRouter>
@@ -69,6 +70,10 @@ function App() {
           <Route
             path="/classroom/view/:id"
             element={<SecondClassroom/>}
+          />
+          <Route
+            path="/classroom/:id/new/assignment"
+            element={<PostAssignment/> }  
           />
         </Routes>
       </main>

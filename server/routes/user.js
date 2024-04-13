@@ -29,7 +29,7 @@ router.post('/register', async(req, res) => {
             return res.status(400).json({success: false, error: 'Passwords do not match'})
         }
         const salt = await bcrypt.genSalt(10)
-        const hashedPassword = await bcrypt.hash(password, salt)
+        const hashedPassword = await bcrypt.hash(password, salt)    
         const user = new User({last_name, first_name, email, password: hashedPassword, role, status, school, major, subjects, user_photo, username, gender:'Not set', age: 'Not set', bio: 'Not set', })
         await user.save()
         const {primaryToken, refreshToken} = await generateToken(last_name, first_name, email, role)

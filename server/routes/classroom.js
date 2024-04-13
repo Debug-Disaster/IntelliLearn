@@ -134,4 +134,41 @@ router.get('/myclasses/:username', async(req, res) => {
         return res.status(500).json({success: false, error: err.message})
     }
 })
+router.post('/publish/:id/assignment', async(req, res) => {
+    try{
+        const classroomId = req.params.id
+        if(!classroomId){
+            return res.status(400).json({success: false, error: 'Please provide a classroom ID'})
+        }
+        const {title, description, content} = req.body
+        if(!title || !description || !content){
+            return res.status(400).json({success: false, error: 'Please fill in all fields'})
+        }
+        if(!req.headers.cookie){
+            return res.status(401).json({success: false, error: 'Unauthorized'})
+        }
+        const cookies = cookie.parse(req.headers.cookie)
+        if(!cookies || !cookies.primaryToken || !cookies.refreshToken){
+            return res.status(401).json({success: false, error: 'Unauthorized'})
+        }
+        const {user} = await getUser(cookies.primaryToken, cookies.refreshToken)
+        if(!user){
+            return res.status(401).json({success: false, error: 'Unauthorized'})
+        }
+        const usera = await User.findOne({username: user.username})
+        if(!usera){
+            return res.status(404).json({success: false, error: 'User not found'})
+        }
+        const classroomData = await classroom.findOne({_id: classroomId, mentor: user.username})
+        if(!classroomData){
+            return res.status(404).json({success: false, error: 'Classroom not found'})
+        }
+        const newAssignment = {title, description, content}
+        classroomData.assignments.push(newAssignment)
+        classroomData.save()
+        return res.status(200).json({success: true, assignments: classroomData.assignments})
+    }catch(err){
+        return res.status(500).json({success: false, error: 'Internal Server Error'})
+    }
+})
 module.exports = router
