@@ -214,7 +214,7 @@ const MyClasses = () => {
             </div>
         </div> */
         <div>
-            <h1 className="text-4xl font-bold m-10">The classes you are enrolled:</h1>
+            <h1 className="text-4xl font-bold m-10">The classes you are enrolled in:</h1>
             <div className="container mx-auto h-[100vh] my-5 grid grid-cols-2 gap-5">
                 {error && <Error error={error} />}
                 {isLoading && <h1>Loading...</h1>}
