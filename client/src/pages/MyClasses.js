@@ -3,7 +3,9 @@ import {UserContext} from "../context/UserContext";
 import { useGetMyClasses } from "../hooks/useGetMyClasses";
 import NotFound from "./NotFound"
 import Error from "../components/Error";
+import {useNavigate} from 'react-router-dom';
 const MyClasses = () => {
+    const navigate = useNavigate();
     const { user } = useContext(UserContext);
     const { data, error, isLoading } = useGetMyClasses(user ? user.username : "")
     console.log(data)
@@ -220,7 +222,7 @@ const MyClasses = () => {
                 {isLoading && <h1>Loading...</h1>}
                 {data && data.map((classroom, index) => {
                     return (
-                        <div key={index} className="grid gap-4 bg-white rounded-lg overflow-hidden w-full shadow-lg dark:bg-gray-900">
+                        <div key={index} onClick={() =>navigate(`/classroom/${classroom._id}`)}className="grid gap-4 bg-white rounded-lg overflow-hidden w-full shadow-lg dark:bg-gray-900">
                             <div className="p-4 grid gap-2">
                                 <h2 className="text-lg font-semibold">{classroom.subject}</h2>
                                 <p className="text-sm text-gray-500 dark:text-gray-400">{classroom.description}</p>

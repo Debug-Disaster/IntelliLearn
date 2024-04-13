@@ -4,11 +4,14 @@ import uploadImage from '../assets/uploadImage.png'
 import {useEffect, useState} from 'react'
 import {useGetUser} from '../hooks/useGetUser'
 import { useGetProfile } from '../hooks/useGetProfile';
+import NotFound from './NotFound';
 const Profil = () => {
     const [isHovered, setIsHovered] = useState(false);
     const {username} = useParams();
     const {data: userProfile, error, isLoading} = useGetProfile(username);
-    console.log(userProfile)
+    console.log(userProfile);
+    if(!userProfile)
+        return <NotFound/>
     return (
         <div className='flex flex-row max-md:flex-col gap-5 m-5 h-[100%]'>
             <div className='flex flex-col w-[40%] max-md:w-[100%] h-[100vh]' style={{backgroundColor:'#272C33', borderRadius:'16px'}}>
@@ -27,17 +30,17 @@ const Profil = () => {
                             }
                         }   style={{cursor:'pointer'}}
                             className="w-40 h-40 text-large mt-5" />
-                        <p className='mx-auto mt-2 mb-4' style={{fontSize:'2.5rem', textAlign:'center'}}> Gigel </p>
+                        <p className='mx-auto mt-2 mb-4' style={{fontSize:'2.5rem', textAlign:'center'}}> {userProfile.username} </p>
                     </div>
                     <div className='contains-tags-profile w-[100%]'>
                         <Chip color='primary'>Cybersecurity</Chip>
                         <Chip color='primary'>Mentor</Chip>
                         <Chip color='primary'>Founder</Chip>
                     </div> 
-                    <div className='flex flex-col gap-2 mx-auto text-white p-5'>
+                    <div className='flex flex-col gap-2 mx-auto w-[100%] text-white p-5'>
                         <div>
                             <p style={{fontWeight:'bold'}}>About me</p>
-                            <p>I am a cybersecurity expert with over 10 years of experience in the field. I have a passion for teaching and I am the founder of Cybersecurity Academy.</p>
+                            <p>{userProfile.bio}</p>
                         </div>
                         <div className='flex flex-col gap-2 mt-5'>
                         <div className='info-profile-div'>
@@ -52,14 +55,17 @@ const Profil = () => {
                             <p style={{fontWeight:'bold'}}>Gender</p>
                             <p>Male</p>
                         </div>
-                        <div className='info-profile-div'>
-                            <p style={{fontWeight:'bold'}}>Job/Education</p>
-                            <p>Somer</p>
-                        </div>
-                        <div className='info-profile-div'>
-                            <p style={{fontWeight:'bold'}}>Zone of expertise</p>
-                            <p>Full snack developer</p>
-                        </div>
+                        {userProfile.role==="mentor" ?
+                            <div className='info-profile-div'>
+                                <p style={{fontWeight:'bold'}}>Major in</p>
+                                <p>{userProfile.major}</p>
+                            </div>
+                            :
+                            <div className='info-profile-div'>
+                                <p style={{fontWeight:'bold'}}>School</p>
+                                <p>{userProfile.school}</p>
+                            </div>
+                        }
                         </div>
                     </div> 
             </div>
