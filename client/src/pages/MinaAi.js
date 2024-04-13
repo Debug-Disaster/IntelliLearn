@@ -1,14 +1,41 @@
-import {Input} from "@nextui-org/react";
+import {Button, Input} from "@nextui-org/react";
 import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import SendIcon from '@mui/icons-material/Send';
 import {useContext} from 'react'
 import {UserContext} from '../context/UserContext'
-
+import NotFound from "./NotFound";
+import {useState} from 'react'
 const MinaAi = () => {
     const {user} = useContext(UserContext);
-    console.log(user);
+    const [prompt, setPrompt] = useState('')
+    const [prompts, setPrompts] = useState([])
+    if(!user) return <NotFound/>
+    //loading, save prompts, display prompts (user prompt, mina prompt, user prompt, mina prompt, ...)
+    const getPrompt = async() => {
+        try{
+            const res = await fetch('http://localhost:8080/chatbot', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    prompt
+                })
+            })
+            const data = await res.json()
+            if(res.success === false){
+                console.log(data.error)
+            }else{
+                console.log(data)
+                prompts.push(data.message)
+            }
+        }catch(err){
+            console.log(err)
+        }
+    }
     return (
         <div className="minaAi-principal">
             <div className="sidebar-minaAi">
@@ -130,12 +157,17 @@ const MinaAi = () => {
                             <SendIcon className="pb-3 pr-4" style={{width:'40px', height:'40px', cursor:'pointer'}}/>
                         </div>
                     </div>
+                   <div className="flex flex-col gap-5 mt-5">
+                    {prompts.map((prompt, index) => (
+                            <div className="bg-zinc-800 rounded-md">
+                                <p className="p-3">{prompt}</p>
+                            </div>
+                        ))}
+                   </div>
                 </div>
-                <Input type="email" size="lg" variant="underlined" label="Message Mina" className="w-[80%] mx-auto"
+                <Input value={prompt} onChange={(e) => setPrompt(e.target.value)} type="email" size="lg" variant="underlined" label="Message Mina" className="w-[80%] mx-auto"
                 endContent={
-                <div className="pointer-events-none flex items-center">
-                    <SendIcon/>
-                </div>
+                    <Button onClick={() => {getPrompt(); setPrompt("")}} size="small" auto icon={<SendIcon/>} className="bg-[#1e90ff] cursor-pointer">Send</Button>
                 }/>
             </div>
         </div>
