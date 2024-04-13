@@ -47,6 +47,10 @@ function App() {
             element={<Profil/>}
           />
           <Route
+            path="/profile/:username/:action"
+            element={<Profil/>}
+          />
+          <Route
             path="/classroom"
             element={<Classroom/>}
           />
