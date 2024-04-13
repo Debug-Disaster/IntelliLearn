@@ -34,6 +34,30 @@ const Profil = () => {
                     </div>
                 </div>
                 <div className='profile-principal-rest'>
+                    <div className='basic-info flex row' >
+                        <h1>Full name</h1>
+                        <h2>Gigel Alexandrescu</h2>
+                    </div>
+                    <div className='basic-info' >
+                        <h1>Status</h1>
+                        <h2>Mentro</h2>
+                    </div>
+                    <div className='basic-info' >
+                        <h1>Age</h1>
+                        <h2>23</h2>
+                    </div>
+                    <div className='basic-info' >
+                        <h1>Gender</h1>
+                        <h2>Male</h2>
+                    </div>
+                    <div className='basic-info' >
+                        <h1>Job/Education</h1>
+                        <h2>Piscolt highschool</h2>
+                    </div>
+                    <div className='basic-info' style={{fontWeight:'bold'}} >
+                        <h1>Zone of expertise</h1>
+                        <h2>Full snack developer</h2>
+                    </div>
 
                 </div>
             </div>
