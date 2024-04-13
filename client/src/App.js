@@ -9,6 +9,9 @@ import SignUp from "./pages/SignUp";
 import { CreateClassroom } from "./pages/CreateClassroom";
 import Profil from "./pages/Profil";
 import Classroom from "./pages/Classroom";
+import JoinClassroom from "./pages/JoinClassroom";
+import MyClasses from "./pages/MyClasses";
+import ViewClassroom from "./viewClassroom";
 function App() {
   return (
     <BrowserRouter>
@@ -46,6 +49,18 @@ function App() {
           <Route
             path="/classroom"
             element={<Classroom/>}
+          />
+          <Route
+            path="/classroom/join"
+            element={<JoinClassroom/>}
+          />
+          <Route
+            path="/classroom/myClasses"
+            element={<MyClasses/>}
+          />
+          <Route
+            path="/classroom/:classroomId"
+            element={<ViewClassroom/>}
           />
         </Routes>
       </main>

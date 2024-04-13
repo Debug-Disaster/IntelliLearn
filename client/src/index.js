@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import './input.css'
 import '../src/css/navbar.css'
 import '../src/css/profile.css'
+import '../src/css/classroom.css'
 import { NextUIProvider } from '@nextui-org/react';
 import  {UserContextProvider} from './context/UserContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));

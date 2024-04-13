@@ -43,7 +43,14 @@ export const CreateClassroom = () => {
             <h1 className="text-4xl font-bold mb-5">Create Classroom</h1>
             <form onSubmit={(e) => publishClassroom(e)} className="flex flex-col gap-5">
                 <CheckboxGroup orientation="horizontal">
-                    <Checkbox onChange={(e) => setChoice(1)} value={1} >Private (with password connection)</Checkbox>
+                    <Checkbox onChange={(e) => {
+                        //modificat de regele alex + sa modifici sa nu poata sa fie ambele checked in acelasi timp ca nu mi iese
+                        if(choice === 1){
+                            setChoice(0);
+                            return;
+                        }
+                        setChoice(1);
+                    }} value={1}>Private (with password connection)</Checkbox>
                     <Checkbox onChange={(e) => setChoice(0)} value={0} >Public</Checkbox>
                 </CheckboxGroup>
                 <Textarea size="lg" variant="bordered" placeholder="Subject" value={subject} onChange={(e) => setSubject(e.target.value)} />

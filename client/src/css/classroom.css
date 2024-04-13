@@ -1,0 +1,35 @@
+.select-classroom-category{
+    margin-top: 50px !important;
+    width:80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    height:calc(100vh - 65px - 100px);
+    justify-content: space-between;
+}
+
+.select-classroom-category div{
+    border-radius: 16px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width:32%;
+    height:100%;
+    background-color: #292D35;
+}
+
+.select-classroom-category div p:nth-child(2){
+    font-size: 2rem;
+}
+
+.view-your-classes{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.view-your-classes div div div div{
+    cursor:pointer;
+}
