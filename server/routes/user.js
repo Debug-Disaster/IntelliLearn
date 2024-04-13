@@ -86,7 +86,7 @@ router.post('/logout', async(req, res) => {
         res.status(500).json({success: false, error: error.message})
     }
 })
-router.post('/getUser/:username', async(req, res) =>{
+router.get('/getUser/:username', async(req, res) =>{
     try{
         const {username} = req.params;
         const user = await User.findOne({username}).select('-id -password');

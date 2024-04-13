@@ -3,27 +3,12 @@ import {Avatar, Button, Chip} from "@nextui-org/react";
 import uploadImage from '../assets/uploadImage.png'
 import {useEffect, useState} from 'react'
 import {useGetUser} from '../hooks/useGetUser'
+import { useGetProfile } from '../hooks/useGetProfile';
 const Profil = () => {
     const [isHovered, setIsHovered] = useState(false);
     const {username} = useParams();
-    // useEffect(() =>{
-    //     const verifyUser = async () =>{
-    //         try{
-    //             const response = await fetch('http://localhost:8080/user/getUser', {
-    //                 method: 'POST',
-    //                 headers: {'Content-Type': 'application/json'},
-    //                 body: JSON.stringify({username})
-    //             });
-    //             const data = await response.json();
-    //             console.log(data)
-    //         }catch(error){
-    //             console.log(error)
-    //         }
-    //     }
-
-    // }, []);
-    const {data, loading, error} = useGetUser(username);
-    console.log(data)
+    const {data: userProfile, error, isLoading} = useGetProfile(username);
+    console.log(userProfile)
     return (
         <div className='flex flex-row max-md:flex-col gap-5 m-5 h-[100%]'>
             <div className='flex flex-col w-[40%] max-md:w-[100%] h-[100vh]' style={{backgroundColor:'#272C33', borderRadius:'16px'}}>
