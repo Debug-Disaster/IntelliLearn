@@ -68,7 +68,6 @@ router.get('/getUser', async(req, res) => {
             return res.status(401).json({success: false, error: 'Unauthorized'})
         }
         const {user, newPrimaryToken, newRefreshToken} = await getUser(primaryToken, refreshToken)
-        console.log(user)
         if(!user){
             return res.status(401).json({success:false, error: 'Unauthorized'})
         }
@@ -87,15 +86,14 @@ router.post('/logout', async(req, res) => {
         res.status(500).json({success: false, error: error.message})
     }
 })
-router.post('/getUser', async(req, res) =>{
+router.post('/getUser/:username', async(req, res) =>{
     try{
-        const {username} = req.body;
+        const {username} = req.params;
         const user = await User.findOne({username}).select('-id -password');
         if(!user){
             return res.status(400).json({success: false, error: 'Invalid user'})
         }
-        console.log(user);
-        res.status(200).json({user})
+        res.status(200).json({success: true, user})
     }catch(error){
         res.status(500).json({success: false, error: error.message})
     }

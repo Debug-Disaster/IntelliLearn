@@ -29,11 +29,9 @@ const userSchema = new mongoose.Schema({
     },
     school : {
         type: String,
-        required: true
     },
     major : {
         type: String,
-        required: true
     },
     subjects : {
         type: Array,
@@ -49,11 +47,9 @@ const userSchema = new mongoose.Schema({
     },
     bio : {
         type: String,
-        required: true
     },
     tags : {
         type: Array,
-        required: true
     },
 }, {timestamps: true})
 
