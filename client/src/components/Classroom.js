@@ -13,7 +13,8 @@
         const {user} = useContext(UserContext)
         const {id} = useParams()
         const {data: classroom, error, isLoading} = useGetClassroom(id)
-        const {data: messages, error: errorMessages, isLoading: isLoadingMessages} = useGetMessages(id)
+        let {data: messages, error: errorMessages, isLoading: isLoadingMessages} = useGetMessages(id)
+        messages = messages || []
         const [messageInput, setMessageInput] = useState('');
         const socket = io('http://localhost:8080');
         useEffect(() => {
@@ -21,9 +22,8 @@
             console.log('Joining room', id);
             socket.emit('join', id);
             socket.on('message', (message) => {
-                messages.push(message);
+                messages.push(message.text);
             });
-            console.log(messages)
             return () => {
                 socket.disconnect();
             };
@@ -31,11 +31,11 @@
         const sendMessage = () => {
             if (messageInput.trim() !== '') {
                 socket.emit('message', { text: messageInput, classroomId: id, sender: user.username });
+                messages.push({ text: messageInput, sender: user.username });
                 setMessageInput('');
             }
         };
-        if(!messages)
-            return <div>Loading...</div>
+        console.log(messages)
         if(isLoading)
             return <div>Loading...</div>
         if(!classroom || !user){
@@ -97,7 +97,7 @@
                 <div className="mt-6">
                     <h1 className="font-extrabold text-4xl">Chat</h1>
                     <div>
-                        {messages.map((message, index) => (
+                        {messages && messages.map((message, index) => (
                             <div key={index}>
                                 <p>{message.sender}: {message.text}</p>
                             </div>
