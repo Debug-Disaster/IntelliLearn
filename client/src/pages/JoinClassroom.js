@@ -1,6 +1,26 @@
-import { Modal, ModalHeader, useDisclosure, ModalContent } from '@nextui-org/react'
+import { Modal, ModalHeader, useDisclosure, ModalContent, Button } from '@nextui-org/react'
 import { useGetClassrooms } from '../hooks/useGetClassrooms'
 import { useState } from 'react'
+const onJoinClassroom = async(id) => {
+    try {
+        const request = await fetch(`http://localhost:8080/classroom/join/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include'
+        })
+        const response = await request.json()
+        if(response.error) {
+            console.error(response.error)
+        }
+        if(response.message) {
+            console.log(response.message)
+        }
+    }catch(err) {
+        console.error(err)
+    }
+}
 const JoinClassroom = () => {
     const {data, error, loading} = useGetClassrooms()
     const [clickedCourse, setClickedCourse] = useState(null)
@@ -24,6 +44,13 @@ const JoinClassroom = () => {
                 <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                     <ModalContent>
                         <ModalHeader onClose={onClose}>Join {clickedCourse.subject}</ModalHeader>
+                        <p className='ml-4'>Interested on what you can do on this course?</p>
+                        <p className='ml-4'>{clickedCourse.description}</p>
+                        <p className='ml-4'>Mentor: {clickedCourse.mentor}</p>
+                        <p className='ml-4'>Status: {clickedCourse.status}</p>
+                        <Button onClick={() => {onJoinClassroom(clickedCourse._id); onClose()}} className='m-4' auto>
+                            Join
+                        </Button>
                     </ModalContent>
                 </Modal>
             }

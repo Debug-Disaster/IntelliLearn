@@ -36,12 +36,11 @@ export const SearchIcon = (props) => (
 export const NavBar = () => {
     const navigate = useNavigate();
     const {user, auth, logout, getUser} = useContext(UserContext)
-    console.log(user)
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const menuItems = [
      "Help & Feedback",
-   ];
+    ];
    return (
         <Navbar maxWidth="full" onMenuOpenChange={setIsMenuOpen} isBordered isBlured>
             <NavbarContent>
