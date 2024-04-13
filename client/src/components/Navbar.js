@@ -50,7 +50,6 @@ export const NavBar = () => {
                 className="sm:hidden"
                 />
                 <NavbarBrand>
-                    <p className="font-bold text-inherit" style={{cursor:'pointer'}} onClick={() => navigate('/home')}>IntelliLearn</p>
                 </NavbarBrand>
             </NavbarContent>
 
