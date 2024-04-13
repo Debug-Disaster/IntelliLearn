@@ -5,6 +5,7 @@ import './input.css'
 import '../src/css/navbar.css'
 import '../src/css/profile.css'
 import '../src/css/classroom.css'
+import '../src/css/minaAi.css'
 import { NextUIProvider } from '@nextui-org/react';
 import  {UserContextProvider} from './context/UserContext';
 import { QueryClientProvider } from '@tanstack/react-query';

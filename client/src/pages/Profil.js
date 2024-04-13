@@ -112,9 +112,11 @@ const Profil = () => {
         <div className='flex flex-row max-md:flex-col gap-5 m-5 h-[100%]'>
             <div className='flex flex-col w-[40%] max-md:w-[100%] h-[100vh]' style={{backgroundColor:'#272C33', borderRadius:'16px'}}>
                     {eruare && (
-                        <Error error={eruare}/>
+                        <div className="mt-3 ml-2" style={{position:'absolute'}}>
+                          <Error error={eruare}/>
+                        </div>
                     )}
-                    <div className='mx-auto mt-5'>
+                    <div className='mx-auto mt-12'>
                         {userProfile.role === 'mentor' &&
                         <div onClick={onOpen} style={{cursor:'pointer', display:'flex', flexDirection:'row'}}>
                           <p>{userProfile.stars}/5</p>
@@ -124,17 +126,17 @@ const Profil = () => {
                         <Avatar src={
                             isHovered ? uploadImage : `https://i.pravatar.cc/150?u=a042581f4e29026024d`}
                             onMouseEnter={() => {
-                                //if(user && user.username === userProfile.username){
-                                setIsHovered(true); 
-                                //}
+                                if(user && user.username === userProfile.username){
+                                  setIsHovered(true); 
+                                }
                             }}
                             onMouseLeave={() => {
-                                //if(user && user.username === userProfile.username){
+                                if(user && user.username === userProfile.username){
                                     setIsHovered(false); 
-                                //}
+                                }
                             }
                         }   style={{cursor:'pointer', margin:'0 auto'}}
-                            className="w-40 h-40 text-large mt-5" />
+                            className="w-40 h-40 text-large"/>
                         <p className='mx-auto mt-2 mb-4' style={{fontSize:'2.5rem', textAlign:'center'}}> {userProfile.username} </p>
                     </div>
                     <div className='contains-tags-profile w-[100%]'>
@@ -257,7 +259,7 @@ const Profil = () => {
                       </div>
                       </div>
                     }
-                    {action==="Classrooms" || action === undefined ?
+                    {data && action==="Classrooms" || action === undefined ?
                     <div style={{overflowY: 'auto', maxHeight: '99%'}}>
                       {data && data.length === 0 ? <div>
                         <h1 style={{fontSize:'1.5rem', margin:'0 auto', textAlign:'center', marginTop:'15px'}}>{userProfile.username} does not take part in any classes.</h1>
