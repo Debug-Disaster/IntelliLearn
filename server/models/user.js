@@ -65,6 +65,9 @@ const userSchema = new mongoose.Schema({
     starVotes : {
         type: Array,
     },
+    prompts : {
+        type: Array,
+    },
 }, {timestamps: true})
 
 module.exports = mongoose.model('user', userSchema)

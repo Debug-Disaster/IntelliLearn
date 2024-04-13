@@ -31,7 +31,7 @@ app.post('/chatbot', async(req, res) => {
     if(!cookies || !cookies.primaryToken || !cookies.refreshToken){
         return res.status(401).json({error: 'Unauthorized'})
     }
-    const user = await geUser(cookies.primaryToken, cookies.refreshToken);
+    const {user} = await geUser(cookies.primaryToken, cookies.refreshToken);
     if(!user){
         return res.status(401).json({error: 'Unauthorized'})
     }
@@ -45,7 +45,8 @@ app.post('/chatbot', async(req, res) => {
             messages: [{ role: "system", content: prompt }],
             model: "gpt-3.5-turbo",
           });
-        usera.prompts.push(completion.choices[0].message.content)
+          usera.prompts.push(completion.choices[0].message.content)
+          await usera.save()
           res.status(200).json({message: completion.choices[0].message.content})
     }catch(error){
         res.status(500).json({ error: error.message });
