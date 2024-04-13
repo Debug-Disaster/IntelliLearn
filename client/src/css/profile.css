@@ -1,0 +1,28 @@
+.divProfil-rest{
+    height: calc(96% - 50px);
+    background-color: #272C33;
+    border-radius: 16px;
+}
+
+.contains-tags-profile{
+    border-bottom: 50px solid #0F0E0E;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding-bottom: 20px;
+    gap:10px;
+}
+
+.info-profile-div{
+    display: flex;
+    flex-direction: row;
+    gap:20px;
+    cursor: pointer;
+    transition: ease-out;
+    transition-duration:150ms ;
+    border-color: rgb(0, 140, 255);
+    background:#1b1e22;
+    border-width:1px;
+    padding:2px 4px 2px 4px;
+    border-radius: 10px;
+}
