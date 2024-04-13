@@ -9,6 +9,7 @@ import { useGetProfile } from '../hooks/useGetProfile';
 import { useGetMyClasses } from "../hooks/useGetMyClasses";
 import NotFound from './NotFound';
 import star from '../assets/star.png'
+import Error from '../components/Error';
 
 export const EyeFilledIcon = (props) => (
     <svg
@@ -78,10 +79,29 @@ const Profil = () => {
     const {user} = useContext(UserContext);
     const {data: userProfile, error, isLoading} = useGetProfile(username);
     const [rating, setRating] = useState(0);
+    const [eruare, setEruare] = useState(false);
 
-    const handleClick = (rate) => {
-        setRating(rate);
-    };
+    const handleRateMentor = async (rate) =>{
+        console.log(rate);
+        const response = await fetch(`http://localhost:8080/user/giveStars`, {
+          method: 'POST',
+          headers:{
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({mentor: userProfile.username, student: user.username, stars: rate})
+        })
+        const json = await response.json();
+        if(response.ok){
+          console.log(json);
+          window.location.reload();
+        }else{
+          setEruare(json.error)
+          onClose();
+          setTimeout(()=>{
+              setEruare(null);
+          }, 7000)
+        }
+    }
     const { data } = useGetMyClasses(user ? user.username : "");
     if(!userProfile)
         return <NotFound/>
@@ -91,6 +111,9 @@ const Profil = () => {
     return (
         <div className='flex flex-row max-md:flex-col gap-5 m-5 h-[100%]'>
             <div className='flex flex-col w-[40%] max-md:w-[100%] h-[100vh]' style={{backgroundColor:'#272C33', borderRadius:'16px'}}>
+                    {eruare && (
+                        <Error error={eruare}/>
+                    )}
                     <div className='mx-auto mt-5'>
                         {userProfile.role === 'mentor' &&
                         <div onClick={onOpen} style={{cursor:'pointer', display:'flex', flexDirection:'row'}}>
@@ -275,11 +298,16 @@ const Profil = () => {
                 </div>
             </div>
             <Modal isOpen={isOpen} onOpenChange={onOpenChange} onClose={onClose}>
-               <ModalContent className='p-5'>
+               <ModalContent className='p-5 flex' style={{backgroundColor:'#586475', alignItems:'center'}}>
                 <ModalHeader>Rating</ModalHeader>
                   <div className='flex flex-col gap-5'>
                     <p>Rate your mentor</p>
-                      <span class="rate"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></span>
+                      <span class="rate mx-auto">
+                      <i onClick={() =>handleRateMentor(1)}style={{color:'white'}}>★</i>
+                      <i onClick={() =>handleRateMentor(2)}style={{color:'white'}}>★
+                      </i><i style={{color:'white'}} onClick={() =>handleRateMentor(3)}>★</i>
+                      <i style={{color:'white'}} onClick={() =>handleRateMentor(4)}>★</i>
+                      <i style={{color:'white'}} onClick={() =>handleRateMentor(5)}>★</i></span>
                   </div>
                </ModalContent>
             </Modal>

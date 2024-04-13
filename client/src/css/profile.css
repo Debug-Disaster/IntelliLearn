@@ -55,12 +55,12 @@
 }
 
 .rate i:hover ~ i {
-    color: var(--star-color);
+    color: var(--star-color) !important;
     text-shadow: none;
 }
 
 .rate:hover i {
-    color: var(--star-hover-color);
+    color: var(--star-hover-color) !important;
     text-shadow: var(--star-hover-color) 0 0 20px;
 }
 
@@ -68,6 +68,6 @@
     transition-delay: calc(30ms * var(--n));
 }
 .rate i.rated {
-    color: var(--star-hover-color);
+    color: var(--star-hover-color) !important;
     text-shadow: var(--star-hover-color) 0 0 20px;
 }

@@ -110,8 +110,7 @@ router.post('/giveStars', async(req, res) =>{{
                 name: student
               }
             }
-          });
-        console.log(verifUser);
+          })
         if(verifUser){
             return res.status(400).json({success: false, error: 'You have already rated this mentor'});
         }
@@ -122,17 +121,20 @@ router.post('/giveStars', async(req, res) =>{{
             },
         }
         const Userr = await User.findOneAndUpdate({username: mentor}, updatedData);
-
+        
         const user = await User.aggregate([
             { $match: { username: mentor } },
             { $unwind: "$starVotes" },
             {
                 $group: {
                     _id: "$_id",
-                    stars: { $avg: "$starVotes.star" }
+                    averageStars: { $avg: "$starVotes.star" }
                 }
             }
         ]);
+        console.log(user[0].averageStars)
+        // Update the stars field with the average star votes
+        await User.updateOne({ username: mentor }, { stars: user[0].averageStars });
 
         res.status(200).json({ success: true});
         
