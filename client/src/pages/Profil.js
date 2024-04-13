@@ -2,12 +2,15 @@ import {useParams, Link} from 'react-router-dom';
 import {Avatar, Button, Chip} from "@nextui-org/react";
 import uploadImage from '../assets/uploadImage.png'
 import {useEffect, useState} from 'react'
+import {useContext} from 'react'
+import {UserContext} from '../context/UserContext'
 import {useGetUser} from '../hooks/useGetUser'
 import { useGetProfile } from '../hooks/useGetProfile';
 import NotFound from './NotFound';
 const Profil = () => {
     const [isHovered, setIsHovered] = useState(false);
     const {username} = useParams();
+    const {user} = useContext(UserContext);
     const {data: userProfile, error, isLoading} = useGetProfile(username);
     console.log(userProfile);
     if(!userProfile)
@@ -28,7 +31,7 @@ const Profil = () => {
                                     setIsHovered(false); 
                                 //}
                             }
-                        }   style={{cursor:'pointer'}}
+                        }   style={{cursor:'pointer', margin:'0 auto'}}
                             className="w-40 h-40 text-large mt-5" />
                         <p className='mx-auto mt-2 mb-4' style={{fontSize:'2.5rem', textAlign:'center'}}> {userProfile.username} </p>
                     </div>
@@ -70,8 +73,20 @@ const Profil = () => {
                     </div> 
             </div>
             <div className='flex w-[100%] h-[100vh]' style={{flexDirection:'column', justifyContent:'space-between'}}>
-                <div style={{width:'100%', height:'50px', backgroundColor:'#272C33', borderRadius:'16px'}}>
-
+                <div  style={{width:'100%', height:'50px', backgroundColor:'#272C33', borderRadius:'16px'}}>
+                    <div className="navbar-profile">
+                        {user && userProfile && user.username === userProfile.username &&
+                        <div>
+                            Settings
+                        </div>
+                        }
+                        <div>
+                            Activity
+                        </div>
+                        <div>
+                            Classrooms
+                        </div>
+                    </div>
                 </div>
                 <div className='divProfil-rest'>
                     
