@@ -7,14 +7,19 @@ import '../src/css/profile.css'
 import '../src/css/classroom.css'
 import { NextUIProvider } from '@nextui-org/react';
 import  {UserContextProvider} from './context/UserContext';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const queryClient = new QueryClient();
 root.render(
   <React.StrictMode>
-    <NextUIProvider>
-      <UserContextProvider>
-        <App style={{backgroundColor:'#0F0E0E'}}/>
-      </UserContextProvider>
-    </NextUIProvider>
+    <QueryClientProvider client={queryClient}>
+      <NextUIProvider>
+        <UserContextProvider>
+          <App style={{backgroundColor:'#0F0E0E'}}/>
+        </UserContextProvider>
+      </NextUIProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );
 

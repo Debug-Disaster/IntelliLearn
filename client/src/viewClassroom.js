@@ -1,8 +1,8 @@
 const ViewClassroom = () => {
     return (
-    <div>
-        ViewClassroom
-    </div>
+        <div>
+            ViewClassroom
+        </div>
     );
 }
  
