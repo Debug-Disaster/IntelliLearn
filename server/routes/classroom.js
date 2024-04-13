@@ -121,7 +121,7 @@ router.get('/myclasses/:username', async(req, res) => {
         if(!usera){
             return res.status(404).json({success: false, error: 'User not found'})
         }
-        const classrooms = await classroom.find({students: user.username}).select('-students -password')
+        const classrooms = await classroom.find({students: user.username}).select('-password')
         return res.status(200).json({success: true, classrooms})
     }catch(err){
         return res.status(500).json({success: false, error: err.message})

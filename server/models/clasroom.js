@@ -33,10 +33,6 @@ const classroomSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
-    classroom_code: {
-        type: String,
-        required: true
-    },
     assignments: {
         type: Array,
         required: true
