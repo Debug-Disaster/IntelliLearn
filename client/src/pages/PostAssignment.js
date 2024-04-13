@@ -14,7 +14,7 @@ export const PostAssignment = () => {
     //fix const [dueDate, setDueDate] = useState("")
     const [content, setContent] = useState("")
     const {user} = useContext(UserContext)
-    if(!user){
+    if(!user || !user.role == 'mentor'){
         return <NotFound/>
     }
     const publishAssignment = async() => {
