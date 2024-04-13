@@ -100,7 +100,7 @@ export const NavBar = () => {
             </div>
             }
             {user ?
-                <NavbarItem className="hidden lg:flex">
+                <NavbarItem className="lg:flex">
                 <Dropdown placement="bottom-end">
                     <DropdownTrigger>
                     <Avatar

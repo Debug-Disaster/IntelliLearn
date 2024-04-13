@@ -33,3 +33,57 @@
 .view-your-classes div div div div{
     cursor:pointer;
 }
+
+@media (min-width:825px) and (max-width: 1125px) {
+    .select-classroom-category{
+        width: 98%;
+    }
+}
+
+@media(max-width:825px){
+    .select-classroom-category{
+        display: none !important;
+    }
+    .select-classroom-category-mb{
+        display: flex !important;
+        margin-top: 50px !important;
+        width:95%;
+        margin: 0 auto;
+        flex-direction: column;
+        height:calc(100vh - 65px - 100px);
+        justify-content: space-between;
+    }
+
+    .select-classroom-category-mb div{
+        border-radius: 16px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height:32%;
+        background-color: #292D35;
+        font-size: 1.7rem;
+    }
+}
+
+@media (max-width: 525px) {
+    .select-classroom-category-mb div{
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+    .tomodifyclassrooms{
+        width: 95% !important;
+    }
+}
+
+@media (max-width: 425px) {
+    .select-classroom-category-mb div{
+        font-size: 0.9rem;
+        font-weight: bold;
+    }
+
+    .tomodifyclassrooms{
+        width: 95% !important;
+    }
+}

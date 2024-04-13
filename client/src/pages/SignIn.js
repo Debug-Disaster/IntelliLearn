@@ -103,10 +103,10 @@ const SignIn = () => {
     return (
         <div style={{display:'flex', backgroundColor: '#0F0E0E'}}>
         <form className='signUp-div signindiv'>
-            {error && <Error error={error} />}
             <p className='signUp-create-account-text'>
                 SIGN-IN
             </p>
+            {error && <Error error={error} />}
             <div className='inputs-div'>
                 <Input value={query} onChange={(e) => setQuery(e.target.value)} type="text" variant="bordered" label="Email or Username" />
                 <Input
