@@ -20,7 +20,40 @@
 }
 
 .sidebar-minaAi-bottompart{
+    padding-top: 5px;
     font-size: 1.3rem;
     padding-left: 15px;
     padding-bottom:10px;
+}
+
+.minaAi-byothpeople{
+    padding-left: 15px;
+    color: #9B9B8A;
+    height: calc(50% - 90px);
+}
+
+.minaAi-byyou{
+    padding-left: 15px;
+    color: #9B9B8A;
+    height: calc(50% - 90px);
+}
+
+.chat-minaAi{
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 65px);
+    width: calc(100% - 250px);
+    justify-content: space-between;
+    padding-bottom: 50px;
+    padding-top: 50px;
+}
+
+.prompt-ideas-mina{
+    width: 200px;
+    height: 200px;
+    background-color: #1E1F20;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
