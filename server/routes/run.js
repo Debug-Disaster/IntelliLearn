@@ -37,7 +37,9 @@ function sanitizeCode(userCode) {
     return sanitizedCode;
 }
 router.post('/run', async(req, res) => {
-    const {code, classroom_id, assignment} = req.body;
+    const {classroom_id, assignment} = req.body;
+    let {code} = req.body;
+    code = sanitizeCode(code);
     const cookies = cookie.parse(req.headers.cookie);
     const username = cookies.username;
     const path = createAssignmentDirectory(username, classroom_id, assignment);

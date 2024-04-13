@@ -64,7 +64,7 @@ export const Classroom = () => {
                     <CardBody>
                         <p className="font-semibold text-lg">Description: {assignment.description}</p>
                         <p className="font-semibold text-lg">Due date: {assignment.dueDate}</p>
-                        <p className="font-semibold text-lg">Problem page: <Link to={`/classroom/${id}/assignment/${index}`}>Go to assignment</Link></p>
+                        <p className="font-semibold text-lg">Problem page: <Link to={`/classrooms/${id}/assignment/${index}`}>Go to assignment</Link></p>
                     </CardBody>
                 </Card>
             ))}
