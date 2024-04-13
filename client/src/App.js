@@ -8,6 +8,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import { CreateClassroom } from "./pages/CreateClassroom";
 import Profil from "./pages/Profil";
+import Classroom from "./pages/Classroom";
 function App() {
   return (
     <BrowserRouter>
@@ -41,6 +42,10 @@ function App() {
           <Route
             path="/profile/:username"
             element={<Profil/>}
+          />
+          <Route
+            path="/classroom"
+            element={<Classroom/>}
           />
         </Routes>
       </main>

@@ -56,7 +56,7 @@ export const NavBar = () => {
 
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <NavbarItem>
-                <Link color="foreground" style={{cursor:'pointer'}} onClick={() => navigate('/classrooms')}>
+                <Link color="foreground" style={{cursor:'pointer'}} onClick={() => navigate('/classroom')}>
                     Classrooms
                 </Link>
                 </NavbarItem>
@@ -111,7 +111,7 @@ export const NavBar = () => {
                     />
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Profile Actions" variant="flat">
-                    <DropdownItem key="profil">
+                    <DropdownItem key="profil" onClick={() => navigate(`/profile/${user.username}`)}>
                         View profile
                     </DropdownItem>
                     <DropdownItem key="settings">
