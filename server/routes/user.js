@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken')
+const passwordValidator = require('password-validator');
+let schema = new passwordValidator();
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
@@ -11,6 +13,11 @@ const generateToken = async(last_name, first_name, email, role) => {
     const refreshToken = jwt.sign({last_name, first_name, email, role}, process.env.SECOND_SECRET_KEY, {expiresIn: '7d'})
     return {primaryToken, refreshToken}
 }
+schema
+.has().uppercase()                              // Must have uppercase letters
+.has().lowercase()                              // Must have lowercase letters
+.has().digits(2)                                // Must have at least 2 digits
+.has().not().spaces()                           // Should not have spaces
 router.post('/register', async(req, res) => {
     try{
         const {last_name, first_name, email, password, role, status, school, major, subjects, confirmPassword, user_photo, username} = req.body
@@ -28,6 +35,10 @@ router.post('/register', async(req, res) => {
         if(password !== confirmPassword){
             return res.status(400).json({success: false, error: 'Passwords do not match'})
         }
+        if(password.length < 8)
+            return res.status(400).json({success: false, error: 'Password must be at least 8 characters long'});
+        if(!schema.validate(password))
+            return res.status(400).json({success: false, error: 'Password too weak!'});
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, salt)    
         const user = new User({last_name, first_name, email, password: hashedPassword, role, status, school, major, subjects, user_photo, 
