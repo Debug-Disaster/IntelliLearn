@@ -55,7 +55,7 @@ function App() {
             element={<JoinClassroom/>}
           />
           <Route
-            path="/classroom/myClasses"
+            path="/classroom/myclasses"
             element={<MyClasses/>}
           />
           <Route

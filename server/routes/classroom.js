@@ -82,10 +82,17 @@ router.post('/join/:id', async(req, res) => {
         const cookies = cookie.parse(req.headers.cookie)
         const classroomId = req.params.id
         const {user} = await getUser(cookies.primaryToken, cookies.refreshToken)
+        const {password} = req.body
         if(!user){
             return res.status(401).json({success: false, error: 'Unauthorized'})
         }
         const classroomData = await classroom.findOne({_id: classroomId})
+        if(classroomData.password){
+            const match = bcrypt.compareSync(password, classroomData.password)
+            if(!match){
+                return res.status(400).json({success: false, error: 'Incorrect password'})
+            }
+        }
         if(!classroomData){
             return res.status(404).json({success: false, error: 'Classroom not found'})
         }
