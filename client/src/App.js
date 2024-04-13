@@ -13,6 +13,7 @@ import Classroom from "./pages/Classroom";
 import JoinClassroom from "./pages/JoinClassroom";
 import MyClasses from "./pages/MyClasses";
 import { PostAssignment } from "./pages/PostAssignment";
+import { Assignment } from "./components/Assignment";
 function App() {
   return (
     <BrowserRouter>
@@ -74,6 +75,10 @@ function App() {
           <Route
             path="/classroom/:id/new/assignment"
             element={<PostAssignment/> }  
+          />
+          <Route
+            path="/classroom/:id/assignment/:index"
+            element={<Assignment/>}
           />
         </Routes>
       </main>

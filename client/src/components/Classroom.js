@@ -4,11 +4,12 @@ import NotFound from "../pages/NotFound"
 import {UserContext} from '../context/UserContext'
 import {useContext} from 'react'
 import { Card, CardBody, Table, CardHeader, TableHeader, TableRow, TableCell, TableBody, TableColumn, Button } from "@nextui-org/react"
+import { useNavigate } from "react-router-dom"
 export const Classroom = () => {
+    const navigate = useNavigate()
     const {user} = useContext(UserContext)
     const {id} = useParams()
     const {data: classroom, error, isLoading} = useGetClassroom(id)
-    console.log(classroom);
     if(isLoading)
         return <div>Loading...</div>
     if(!classroom){
@@ -46,7 +47,7 @@ export const Classroom = () => {
             <div style={{display:'flex', flexDirection:'row', gap:'20px', alignItems:'center'}} className="mt-6">
                 <h1 className="font-extrabold text-4xl" >Classwork</h1>
                 {user.username === classroom.mentor &&
-                <Button color="default" type = "submit" variant="bordered" size='sm' style={{marginTop:'5px'}}>
+                <Button onClick={() => navigate(`/classroom/${id}/new/assignment`)} color="default" type = "submit" variant="bordered" size='sm' style={{marginTop:'5px'}}>
                     Post assignment
                 </Button>
                 }
