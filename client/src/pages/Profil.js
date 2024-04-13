@@ -6,6 +6,7 @@ import {useContext} from 'react'
 import {UserContext} from '../context/UserContext'
 import {useGetUser} from '../hooks/useGetUser'
 import { useGetProfile } from '../hooks/useGetProfile';
+import { useGetMyClasses } from "../hooks/useGetMyClasses";
 import NotFound from './NotFound';
 
 export const EyeFilledIcon = (props) => (
@@ -65,6 +66,7 @@ export const EyeSlashFilledIcon = (props) => (
   );
 
 const Profil = () => {
+    const navigate = useNavigate(); 
     const [isVisible, setIsVisible] = useState(false)
     const toggleVisibility = () => setIsVisible(!isVisible);
 
@@ -75,6 +77,9 @@ const Profil = () => {
     const {user} = useContext(UserContext);
     const {data: userProfile, error, isLoading} = useGetProfile(username);
     console.log(userProfile);
+;
+    const { data } = useGetMyClasses(user ? user.username : "");
+
     if(!userProfile)
         return <NotFound/>
     console.log(action);
@@ -83,7 +88,7 @@ const Profil = () => {
     return (
         <div className='flex flex-row max-md:flex-col gap-5 m-5 h-[100%]'>
             <div className='flex flex-col w-[40%] max-md:w-[100%] h-[100vh]' style={{backgroundColor:'#272C33', borderRadius:'16px'}}>
-                    <div className='mx-auto'>
+                    <div className='mx-auto mt-5'>
                         <Avatar src={
                             isHovered ? uploadImage : `https://i.pravatar.cc/150?u=a042581f4e29026024d`}
                             onMouseEnter={() => {
@@ -113,15 +118,15 @@ const Profil = () => {
                         <div className='flex flex-col gap-2 mt-5'>
                         <div className='info-profile-div'>
                             <p style={{fontWeight:'bold'}}>Full name</p>
-                            <p>Gigel Alexandrescu</p>
+                            <p>{userProfile.first_name} {userProfile.last_name}</p>
                         </div>
                         <div className='info-profile-div'>
                             <p style={{fontWeight:'bold'}}>Age</p>
-                            <p>30</p>
+                            <p>{userProfile.age}</p>
                         </div>
                         <div className='info-profile-div'>
                             <p style={{fontWeight:'bold'}}>Gender</p>
-                            <p>Male</p>
+                            <p>{userProfile.gender}</p>
                         </div>
                         {userProfile.role==="mentor" ?
                             <div className='info-profile-div'>
@@ -161,7 +166,7 @@ const Profil = () => {
                 </div>
                 <div className='divProfil-rest'>
                     {action === 'Settings' &&
-                        <div>
+                        <div className='mt-5'>
                         <div className="mx-auto max-w-sm space-y-4">
                         <div className="space-y-2">
                           <h2 className="text-2xl font-bold">Change Password</h2>
@@ -219,6 +224,41 @@ const Profil = () => {
                         </div>
                       </div>
                       </div>
+                    }
+                    {action==="Classrooms" || action === undefined ?
+                    <div style={{overflowY: 'auto', maxHeight: '99%'}}>
+                      {data && data.map((classroom, index) => {
+                    return (
+                        <div key={index} onClick={() =>navigate(`/classroom/view/${classroom._id}`)}className="grid gap-4 bg-white rounded-lg overflow-hidden w-[98%] mx-auto shadow-lg dark:bg-gray-900 mt-3">
+                            <div className="p-4 grid gap-2">
+                                <h2 className="text-lg font-semibold">{classroom.subject}</h2>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                  {classroom.subject.length > 40 ? `${classroom.subject.substring(0, 40)}...` : classroom.subject}
+                                </p>
+                            </div>
+                            <div className="border-t border-gray-200" />
+                            <div className="p-4 grid gap-2">
+                                <h3 className="text-sm font-medium">Mentor</h3>
+                                <div className="flex items-center gap-2">
+                                    <img
+                                        alt="Mentor avatar"
+                                        className="rounded-full"
+                                        height="32"
+                                        src="/placeholder.svg"
+                                        style={{
+                                            aspectRatio: "32/32",
+                                            objectFit: "cover",
+                                        }}
+                                        width="32"
+                                    />
+                                    <div className="text-sm font-medium">{classroom.mentor}</div>
+                                </div>
+                            </div>
+                            <div className="border-t border-gray-200" />
+                        </div>
+                    )
+                })}
+                    </div> : <></>
                     }
                 </div>
             </div>

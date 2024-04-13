@@ -7,6 +7,7 @@ import Error from '../components/Error';
 import NotFound from './NotFound';
 import {useContext} from 'react';
 import {UserContext} from '../context/UserContext';
+import star from '../assets/star.png'
 export const EyeSlashFilledIcon = (props) => (
     <svg
       aria-hidden="true"

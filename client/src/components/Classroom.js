@@ -1,10 +1,14 @@
 import { Link, useParams } from "react-router-dom"
 import { useGetClassroom } from "../hooks/useGetClassroom"
 import NotFound from "../pages/NotFound"
-import { Card, CardBody, Table, CardHeader, TableHeader, TableRow, TableCell, TableBody, TableColumn } from "@nextui-org/react"
+import {UserContext} from '../context/UserContext'
+import {useContext} from 'react'
+import { Card, CardBody, Table, CardHeader, TableHeader, TableRow, TableCell, TableBody, TableColumn, Button } from "@nextui-org/react"
 export const Classroom = () => {
+    const {user} = useContext(UserContext)
     const {id} = useParams()
     const {data: classroom, error, isLoading} = useGetClassroom(id)
+    console.log(classroom);
     if(isLoading)
         return <div>Loading...</div>
     if(!classroom){
@@ -39,9 +43,14 @@ export const Classroom = () => {
                     </Table>
                 </CardBody>
             </Card>
-            <h1 className="font-extrabold text-4xl mt-6">
-                Classwork
-            </h1>
+            <div style={{display:'flex', flexDirection:'row', gap:'20px', alignItems:'center'}} className="mt-6">
+                <h1 className="font-extrabold text-4xl" >Classwork</h1>
+                {user.username === classroom.mentor &&
+                <Button color="default" type = "submit" variant="bordered" size='sm' style={{marginTop:'5px'}}>
+                    Post assignment
+                </Button>
+                }
+            </div>
             {classroom.assignments && classroom.assignments.map((assignment, index) => (
                 <Card key={assignment._id} className="mt-6">
                     <CardHeader>
