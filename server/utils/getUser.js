@@ -6,7 +6,6 @@ const getUser = async(primaryToken, refreshToken) => {
         if(verifiedPrimary.email){
             const email = verifiedPrimary.email
             const user = await User.findOne({email}).select('-password -emailConfirmationCode')
-            console.log(user)
             return {user};
         }else{
                 const refreshVerified = jwt.verify(refreshToken, process.env.SECOND_SECRET_KEY);

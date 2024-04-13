@@ -115,7 +115,7 @@ router.post('/giveStars', async(req, res) =>{{
             return res.status(400).json({success: false, error: 'You have already rated this mentor'});
         }
 
-        const updatedData = {
+        const updatedData = {   
             $addToSet:{
                 starVotes:{name:student, star:stars}
             },
@@ -132,8 +132,6 @@ router.post('/giveStars', async(req, res) =>{{
                 }
             }
         ]);
-        console.log(user[0].averageStars)
-        // Update the stars field with the average star votes
         await User.updateOne({ username: mentor }, { stars: user[0].averageStars });
 
         res.status(200).json({ success: true});

@@ -40,6 +40,10 @@ const classroomSchema = new mongoose.Schema({
     announcements: {
         type: Array,
         required: true
+    },
+    chat: {
+        type: Array,
+        required: true
     }
 }, {timestamps: true})
 
