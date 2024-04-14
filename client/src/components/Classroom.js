@@ -3,10 +3,11 @@
     import NotFound from "../pages/NotFound"
     import {UserContext} from '../context/UserContext'
     import {useContext} from 'react'
-    import { Card, CardBody, Table, CardHeader, TableHeader, TableRow, TableCell, TableBody, TableColumn, Button } from "@nextui-org/react"
+    import { Card, CardBody, Table, CardHeader, TableHeader, TableRow, TableCell, TableBody, TableColumn, Button, ScrollShadow } from "@nextui-org/react"
     import { useNavigate } from "react-router-dom"
     import { useEffect, useState } from "react"
     import { useGetMessages } from "../hooks/useGetMessages"
+    import { Input } from "@nextui-org/react"
     import io from 'socket.io-client'
     export const Classroom = () => {
         const navigate = useNavigate()
@@ -14,12 +15,13 @@
         const {id} = useParams()
         const {data: classroom, error, isLoading} = useGetClassroom(id)
         let {data: messages, error: errorMessages, isLoading: isLoadingMessages} = useGetMessages(id)
+        console.log(messages)
         messages = messages || []
         const [messageInput, setMessageInput] = useState('');
         const socket = io('http://localhost:8080');
         useEffect(() => {
             if (!classroom) return;
-            console.log('Joining room', id);
+            console.log('Joining room', id);    
             socket.emit('join', id);
             socket.on('message', (message) => {
                 messages.push(message.text);
@@ -33,16 +35,15 @@
                 socket.emit('message', { text: messageInput, classroomId: id, sender: user.username });
                 messages.push({ text: messageInput, sender: user.username });
                 setMessageInput('');
-            }
+            }   
         };
-        console.log(messages)
         if(isLoading)
             return <div>Loading...</div>
         if(!classroom || !user){
             return <NotFound/>
         }
         return (
-            <div className="container mx-auto h-[100vh] my-5">
+            <div className="container mx-auto h-[100%] pb-10">
                 <h1 className="font-extrabold text-4xl">
                     Welcome to {classroom.mentor}'s classroom!
                 </h1>
@@ -94,22 +95,23 @@
                         </CardBody>
                     </Card>
                 ))}
-                <div className="mt-6">
-                    <h1 className="font-extrabold text-4xl">Chat</h1>
-                    <div>
-                        {messages && messages.map((message, index) => (
-                            <div key={index}>
-                                <p>{message.sender}: {message.text}</p>
-                            </div>
-                        ))}
+                <ScrollShadow className="h-[500px]">
+                    <div className="mt-6">
+                        <h1 className="font-extrabold text-4xl">Chat</h1>
+                        <div>
+                            {messages && messages.map((message, index) => (
+                                <div key={index}>
+                                    <p>{message.sender}: {message.text}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                    <input
-                        type="text"
-                        value={messageInput}
-                        onChange={(e) => setMessageInput(e.target.value)}
-                    />
-                    <button onClick={sendMessage}>Send</button>
-                </div>
+                </ScrollShadow>
+                <Input endContent={
+                    <Button onClick={sendMessage} color="default" type = "submit" variant="bordered" size='sm'>
+                        Send
+                    </Button>
+                } className="mt-5" type="text" value={messageInput} onChange={(e) => setMessageInput(e.target.value)} />
             </div>
         )
     }

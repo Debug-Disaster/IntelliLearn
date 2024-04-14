@@ -192,9 +192,6 @@ router.get('/messages/:id', async(req, res) => {
         if(!classroomData){
             return res.status(404).json({success: false, error: 'Classroom not found'})
         }
-        if(!classroomData.students.includes(user.username)){
-            return res.status(401).json({success: false, error: 'Unauthorized'})
-        }
         return res.status(200).json({success: true, messages: classroomData.chat})
     }catch(err){
         return res.status(500).json({success: false, error: 'Internal Server Error'})
