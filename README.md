@@ -23,4 +23,4 @@
      > ./client/.env
      REACT_APP_TINYMCE = key pentru api-ul celor de la TinyMCE
  ## Screenshots:
- 	![MinaAi](1.png)
+ 	![MinaAi](./1.png)
