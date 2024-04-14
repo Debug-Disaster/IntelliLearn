@@ -9,8 +9,16 @@
      - Verificare și Feedback Automat: Sistemul automat de verificare a codului asigură că toate testele sunt trecute și oferă feedback detaliat pentru a ajuta elevii să-și îmbunătățească abilitățile de programare.
     
  ## Beneficii:
-
      - Eficiență sporită: Procesul automatizat de atribuire și evaluare a sarcinilor economisește timp atât elevilor, cât și mentorilor.
      - Personalizare: Feedback-ul automat și interacțiunea cu MinaAI permit un proces de învățare personalizat, adaptat la nevoile și ritmul fiecărui elev.
      - Accesibilitate: Prin intermediul unei platforme online, IntelliLearn oferă acces la educație de calitate indiferent de locație sau program.
-
+## Instalare:
+     - Instalati nodejs de [aici](). Daca aveti deja, nu este necesara reinstalarea acesteia.
+     - Intrati in ambele directoare (client si server) pentru a instala package-urile, folosind comanda npm install si setati enviroment variables, stabilite asa:
+     > ./server/.env
+     MONGO_DB = string connection pentru conectarea la baza de date
+     SECRET_KEY = pentru tokenul principal de jwt
+     SECOND_SECRET_KEY = pentru tokenul de refreshing jwt (rotirea tokenilor)
+     OpenAI = key pentru api-ul celor de la OpenAI
+     > ./client/.env
+     REACT_APP_TINYMCE = key pentru api-ul celor de la TinyMCE
