@@ -7,6 +7,8 @@ const cookie = require('cookie');
 const path = require('path');
 const getUser = require('../utils/getUser');
 const User = require('../models/user');
+const openai = require('openai');
+const client = new openai.OpenAI({ apiKey: process.env.OpenAI })
 function createAssignmentDirectory(username, classroom_id, assignment) {
     const safeUsername = username.replace(/[^\w.-]/g, ''); // Sanitize username
     const safePath = path.join('.', safeUsername, classroom_id.toString(), assignment.toString());
@@ -90,15 +92,22 @@ router.post('/run', async(req, res) => {
             results
         }
         const allPassed = results.every(result => result.status === 'AC');
-        console.log(allPassed)
         USER.submissions.push(submission);
         clasa.submitted_assignments.push(submission);
         await clasa.save();
         await USER.save();
+        // feedback from open ai gpt-3.5 turbo
+        const prompt = `I just finished assignment ${assignment + 1} of ${clasa.mentor}'s classroom and here are the results: ${results.map(result => `Input: ${result.input}, Output: ${result.output}, Result: ${result.result}, Status: ${result.status}`).join(' ')}.` + (allPassed ? 'All test cases passed!' : 'Some test cases failed!') + 'Please provide feedback. The code is: ' + code + 'and the task was: ' + clasa.assignments[assignment].content;
+        const completion = await client.chat.completions.create({
+            messages: [{ role: "system", content: prompt }],
+            model: "gpt-3.5-turbo",
+        });
+        const feedback = completion.choices[0].message.content;
+        console.log(feedback)
         if(allPassed){
-            return res.status(200).json({success: true, results, message: 'All test cases passed!', error: null})
+            return res.status(200).json({success: true, results, message: 'All test cases passed!', error: null, feedback})
         }else{
-            return res.status(200).json({success: true, results, message: 'Some test cases failed!', error: true})
+            return res.status(200).json({success: true, results, message: 'Some test cases failed!', error: true, feedback})
         }
     }catch(error){
         res.status(500).json({error: error.stderr, success: false})

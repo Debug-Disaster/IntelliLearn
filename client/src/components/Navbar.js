@@ -64,9 +64,6 @@ export const NavBar = () => {
                 </Link>
                 </NavbarItem>
                 <NavbarItem isActive>
-                <Link aria-current="page" style={{cursor:'pointer'}} onClick={() => navigate('/problems')}>
-                    Problems
-                </Link>
                 </NavbarItem>
                 <NavbarItem>
                 <Link color="foreground" style={{cursor:'pointer'}} onClick={() => navigate('/minaAi')}>

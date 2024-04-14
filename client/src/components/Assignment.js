@@ -89,7 +89,7 @@ export const Assignment = () => {
             </Button>
             <Modal size="4xl" className="w-[100%]" onClose={() => setAssignmentFeedback(false)} isOpen={isOpen} onOpenChange={onOpenChange}>
                <ModalContent>
-               {loading ? <div>Loading...</div> : (
+               {loading ? <div className="text-2xl p-3">Loading...</div> : (
                 <div className="p-5">
                     <h1 className="font-bold text-3xl">Assignment submitted!</h1>
                     <p className="font-semibold text-lg">You have successfully submitted the assignment!</p>
@@ -108,11 +108,19 @@ export const Assignment = () => {
                                 </pre>
                             </Snippet>
                         </p>
+                    )}
+                    {assignmentFeedback.feedback && (
+                        <div>
+                            <p className="font-semibold text-lg">Feedback</p>
+                            <div className="bg-zinc-800 p-5 rounded-md" dangerouslySetInnerHTML={{__html: assignmentFeedback.feedback}}></div>
+                        </div>
                     )}  
-                    <p className="font-semibold text-lg">You can go back to the classroom now!</p>
-                    <Button variant="flat" color="warning">
-                        <Link to={`/classrooms/view/${id}`} className="font-semibold text-lg">Go back to the classroom</Link>
-                    </Button>
+                    <div className="p-3"> 
+                        <p className="font-semibold text-lg">You can go back to the classroom now!</p>
+                        <Button variant="flat" color="warning">
+                            <Link to={`/classrooms/view/${id}`} className="font-semibold text-lg">Go back to the classroom</Link>
+                        </Button>
+                    </div>
                 </div>
                ) }
                </ModalContent>
