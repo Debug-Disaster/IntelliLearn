@@ -6,6 +6,7 @@ const router = express.Router()
 const bcrypt = require('bcrypt')
 const cookie = require('cookie')
 const User = require('../models/user')
+const Clase = require('../models/clasroom')
 require('dotenv').config()
 const getUser = require('../utils/getUser')
 const generateToken = async(last_name, first_name, email, role) => {
@@ -28,10 +29,13 @@ router.post('/register', async(req, res) => {
         if(userExistsWithThisEmail){
             return res.status(400).json({success:false, error: 'User with this email already exists'})
         }
-        const userExistsWithTheseNames = await User.findOne({last_name, first_name})
-        if(userExistsWithTheseNames){
-            return res.status(400).json({success:false, error: 'User with these names already exists'})
-        }
+        // const userExistsWithTheseNames = await User.findOne({last_name, first_name})
+        // if(userExistsWithTheseNames){
+        //     return res.status(400).json({success:false, error: 'User with these names already exists'})
+        // }
+        const userExistsWithUsername = await User.findOne({username})
+        if(userExistsWithUsername)
+            return res.status(400).json({success: false, error: 'User with this username already exists'})
         if(password !== confirmPassword){
             return res.status(400).json({success: false, error: 'Passwords do not match'})
         }
@@ -158,6 +162,23 @@ router.post('/updateProfilePhoto', async(req, res) =>{
         const user = await User.findOneAndUpdate({ username: username}, {user_photo: user_photo})
         console.log(user);
         res.status(200).json({ success: true});
+    }catch(error){
+        res.status(500).json({success: false, error: error.message});
+    }
+})
+
+router.get('/search', async(req, res)=>{
+    try{
+        const {search} = req.query
+        const studentSearches = await User.find({ username: search, role: 'student'});
+        const mentorSearches = await User.find({ username: search, role: 'mentor'});
+        const classSearches = await Clase.find({ subject: search});
+        const searchData={
+            students: studentSearches,
+            mentors: mentorSearches,
+            classes: classSearches
+        }
+        res.status(200).json({searchData});
     }catch(error){
         res.status(500).json({success: false, error: error.message});
     }

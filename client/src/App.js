@@ -17,6 +17,7 @@ import { Assignment } from "./components/Assignment";
 import { ViewLesson } from "./components/ViewLesson";
 import MinaAi from "./pages/MinaAi";
 import { PostLesson } from "./pages/PostLesson";
+import SearchPage from "./pages/SearchPage";
 function App() {
   return (
     <BrowserRouter>
@@ -90,6 +91,10 @@ function App() {
           <Route
             path="/minaAi"
             element={<MinaAi/>}
+          />
+          <Route
+            path="/search"
+            element={<SearchPage searchData={''}/>}
           />
         </Routes>
       </main>

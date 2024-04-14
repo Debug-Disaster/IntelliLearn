@@ -26,12 +26,12 @@ const Homepage = () => {
                 </div>
             <div className="flex-1 flex flex-col gap-5 items-end pt-4">
                 <Button variant="flat"  onClick={() => window.location.href = '/classrooms'}class="bg-black border-2 transiton ease-out duration-300 border-blue-700 rounded px-6 py-2 hover:bg-blue-700 hover:text-white">View Classrooms</Button>
-                <Link to="/signin">
+                {/* <Link to="/signin">
                     <Button variant="flat" class="bg-black border-2 transiton ease-out duration-300 border-blue-700 rounded px-6 py-2 hover:bg-blue-700 hover:text-white" >Add feedback</Button>
                 </Link>
                 <Link to="/signup">
                     <Button variant="flat" class="bg-black border-2 transiton ease-out duration-300 border-blue-700 rounded px-6 py-2 hover:bg-blue-700 hover:text-white" >Contact</Button>
-                </Link>
+                </Link> */}
             </div>
         </div>
         <br />

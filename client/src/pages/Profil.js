@@ -96,6 +96,7 @@ const Profil = () => {
         console.log(json.error);
       else{
         setPhotoDialogue(false);
+        window.location.reload();
       }
     }
 
@@ -288,7 +289,7 @@ const Profil = () => {
                       {data && data.length === 0 ? <div>
                         <h1 style={{fontSize:'1.5rem', margin:'0 auto', textAlign:'center', marginTop:'15px'}}>{userProfile.username} does not take part in any classes.</h1>
                       </div>: <></>}
-                      {data && data.map((classroom, index) => {
+                      {data && data.length > 0 &&data.map((classroom, index) => {
                     return (
                         <div key={index} onClick={() =>navigate(`/classroom/view/${classroom._id}`)}className="grid gap-4 bg-white rounded-lg overflow-hidden w-[98%] mx-auto shadow-lg dark:bg-gray-900 mt-3">
                             <div className="p-4 grid gap-2">

@@ -39,7 +39,8 @@ const userSchema = new mongoose.Schema({
     },
     username : {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     classrooms : {
         type: Array,
