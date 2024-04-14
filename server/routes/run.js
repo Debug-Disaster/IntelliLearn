@@ -54,10 +54,10 @@ router.post('/run', async(req, res) => {
         if(!clasa){
             return res.status(400).json({success: false, error: 'Invalid classroom'})
         }
-    /*     const user = clasa.students.find(student => student.username === username);
+        const user = clasa.students.find(student => student.username === username);
         if(!user){
             return res.status(401).json({success: false, error: 'Unauthorized'})
-        } */
+        }
         fs.writeFileSync(`${path}/main.cpp`, code);
         const compile = execSync(`g++ ${path}/main.cpp -o ${path}/main`, {
             encoding: 'utf-8'
