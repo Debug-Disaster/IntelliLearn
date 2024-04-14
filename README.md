@@ -11,7 +11,7 @@
 
     - Verificare și Feedback Automat: Sistemul automat de verificare a codului asigură că toate testele sunt trecute și oferă feedback detaliat pentru a ajuta elevii să-și îmbunătățească abilitățile de programare.
     
- ##Beneficii:
+ ## Beneficii:
 
      - Eficiență sporită: Procesul automatizat de atribuire și evaluare a sarcinilor economisește timp atât elevilor, cât și mentorilor.
      - Personalizare: Feedback-ul automat și interacțiunea cu MinaAI permit un proces de învățare personalizat, adaptat la nevoile și ritmul fiecărui elev.
