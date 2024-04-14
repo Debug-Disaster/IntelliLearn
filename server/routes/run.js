@@ -40,18 +40,18 @@ router.post('/run', async(req, res) => {
     const {classroom_id, assignment} = req.body;
     let {code} = req.body;
     code = sanitizeCode(code);
-    const cookies = cookie.parse(req.headers.cookie);
-    const username = cookies.username;
+    /* const cookies = cookie.parse(req.headers.cookie);
+    const username = cookies.username; */
     const path = createAssignmentDirectory(username, classroom_id, assignment);
     fs.mkdirSync(path, {recursive: true});
-    const clasa = await Classroom.findOne({_id: classroom_id});
+/*     const clasa = await Classroom.findOne({_id: classroom_id});
     if(!clasa){
         return res.status(400).json({success: false, error: 'Invalid classroom'})
     }
     const user = clasa.students.find(student => student.username === username);
     if(!user){
         return res.status(401).json({success: false, error: 'Unauthorized'})
-    }
+    } */
     fs.writeFileSync(`${path}/main.cpp`, code);
     const compile = execSync(`g++ ${path}/main.cpp -o ${path}/main`, {
         encoding: 'utf-8'
@@ -63,7 +63,7 @@ router.post('/run', async(req, res) => {
         }})
     }
     const results = []
-    clasa.assignments[assignment].forEach(test => {
+    clasa.assignments[assignment].tests.forEach(test => {
         const input = test.input;
         const output = test.output;
         const result = execSync(`${path}/main`, {
