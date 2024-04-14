@@ -3,13 +3,10 @@
 > La IntelliLearn, ne concentrăm pe valorificarea tehnologiei educaționale pentru a îmbunătăți experiențele de învățare, accesibilitatea și implicarea studenților. Ne dorim să creăm un mediu educațional care să fie captivant, personalizat și interactiv.
 ## Caracteristici principale:
 
-    - MinaAI - Asistența AI: Cu ajutorul MinaAI, o inteligență artificială puternică, elevii și mentori pot comunica într-un chat public dedicat membrilor clasei. MinaAI poate oferi asistență în timp real și feedback automat pe baza codului introdus.
-
-    - Atribuiri și Rezolvare de Sarcini: Mentori pot asigna sarcini și exerciții de algoritmă și codare direct pe platformă. Elevii pot rezolva aceste sarcini, iar serverul va verifica automat codul, oferind feedback instantaneu.
-
-    - Interacțiune Socială și Colaborare: Chatul public permite membrilor clasei să discute întrebări sau probleme legate de materie, să colaboreze și să învețe unii de la alții într-un mediu interactiv.
-
-    - Verificare și Feedback Automat: Sistemul automat de verificare a codului asigură că toate testele sunt trecute și oferă feedback detaliat pentru a ajuta elevii să-și îmbunătățească abilitățile de programare.
+     - MinaAI - Asistența AI: Cu ajutorul MinaAI, o inteligență artificială puternică, elevii și mentori pot comunica într-un chat public dedicat membrilor clasei. MinaAI poate oferi asistență în timp real și feedback automat pe baza codului introdus.
+     - Atribuiri și Rezolvare de Sarcini: Mentori pot asigna sarcini și exerciții de algoritmă și codare direct pe platformă. Elevii pot rezolva aceste sarcini, iar serverul va verifica automat codul, oferind feedback instantaneu.
+     - Interacțiune Socială și Colaborare: Chatul public permite membrilor clasei să discute întrebări sau probleme legate de materie, să colaboreze și să învețe unii de la alții într-un mediu interactiv.
+     - Verificare și Feedback Automat: Sistemul automat de verificare a codului asigură că toate testele sunt trecute și oferă feedback detaliat pentru a ajuta elevii să-și îmbunătățească abilitățile de programare.
     
  ## Beneficii:
 
