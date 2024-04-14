@@ -48,6 +48,10 @@ const classroomSchema = new mongoose.Schema({
     chat: {
         type: Array,
         required: true
+    },
+    submitted_assignments: {
+        type: Array,
+        required: true
     }
 }, {timestamps: true})
 

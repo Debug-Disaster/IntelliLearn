@@ -2,13 +2,16 @@ import { useContext } from "react"
 import { Link, useParams } from "react-router-dom"
 import { useGetClassroom } from "../hooks/useGetClassroom"
 import NotFound from "../pages/NotFound"
-import { Button, Card, CardBody, CardHeader } from "@nextui-org/react"
+import { Button, Card, CardBody, CardHeader, Modal, ModalContent, Snippet, useDisclosure } from "@nextui-org/react"
 import { UserContext } from "../context/UserContext"
 import { Editor } from "@monaco-editor/react"
 import { useState } from "react"
 export const Assignment = () => {
+    const {onOpen, isOpen, onClose, onOpenChange} = useDisclosure()
+    const [loading, setLoading] = useState(false)
     const {id, index} = useParams()
     const [code, setCode] = useState(localStorage.getItem('code') || "")
+    const [assignmentFeedback, setAssignmentFeedback] = useState('')
     const {data: classroom, error, isLoading} = useGetClassroom(id)
     const {user} = useContext(UserContext)
     if(!user)
@@ -22,25 +25,32 @@ export const Assignment = () => {
     if(!assignment){
         return <NotFound/>
     }
+    console.log(assignmentFeedback)
     const submitAssignment = async() => {
         try{
-            const res = await fetch(`http://localhost:8080/classroom/submit/${id}/assignment/${index}`, {
+            setLoading(true)
+            const res = await fetch(`http://localhost:8080/run/run`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 credentials: 'include',
                 body: JSON.stringify({
-                    content: code
+                    code,
+                    classroom_id: id,
+                    assignment: index
                 })
             })
             const data = await res.json()
             if(res.success === false){
                 console.log(data.error)
             }else{
+                setAssignmentFeedback(data)
                 console.log(data)
             }
+            setLoading(false)
         }catch(err){
+            setLoading(false)
             console.log(err)
         }
     }
@@ -74,9 +84,46 @@ export const Assignment = () => {
                 <div className="h-[100%] bg-zinc-800 p-5 mb-5 rounded-md" dangerouslySetInnerHTML={{__html: assignment.content}}></div>
                 <Editor onChange={(val, e) => {setCode(val); localStorage.setItem('code', code)}} value={code} theme='vs-dark' language='cpp' height={'80vh'} />
             </div>
-            <Button color="default" type = "submit" variant="flat" size='sm' className="mt-5">
+            <Button onClick={() => {submitAssignment();onOpen()}} color="default" type = "submit" variant="flat" size='sm' className="mt-5">
                 Submit assignment
             </Button>
+            <Modal size="4xl" className="w-[100%]" onClose={() => setAssignmentFeedback(false)} isOpen={isOpen} onOpenChange={onOpenChange}>
+               <ModalContent>
+               {loading ? <div>Loading...</div> : (
+                <div className="p-5">
+                    <h1 className="font-bold text-3xl">Assignment submitted!</h1>
+                    <p className="font-semibold text-lg">You have successfully submitted the assignment!</p>
+                    <p className="font-semibold text-lg">Results:</p>
+                    {assignmentFeedback.error && <p className="font-semibold text-lg">
+                        <Snippet color="danger">
+                            <pre>
+                                {assignmentFeedback.error}
+                            </pre>
+                        </Snippet>
+                    </p>}
+                    {assignmentFeedback.message == 'All test cases passed!' ?  <p className="font-semibold text-lg">
+                        <Snippet color="success">
+                            <pre>
+                                Great job! You passed all the tests!
+                            </pre>
+                        </Snippet>
+                    </p>: (
+                        <p className="font-semibold text-lg">
+                            <Snippet color="warning">
+                                <pre>
+                                    Some test cases failed!
+                                </pre>
+                            </Snippet>
+                        </p>
+                    )}  
+                    <p className="font-semibold text-lg">You can go back to the classroom now!</p>
+                    <Button variant="flat" color="warning">
+                        <Link to={`/classrooms/view/${id}`} className="font-semibold text-lg">Go back to the classroom</Link>
+                    </Button>
+                </div>
+               ) }
+               </ModalContent>
+            </Modal>
         </div>
     )
 }

@@ -3,6 +3,7 @@ import { useGetClassrooms } from '../hooks/useGetClassrooms'
 import { useContext, useState } from 'react'
 import Error from '../components/Error'
 import { UserContext } from '../context/UserContext'
+import NotFound from './NotFound'
 const JoinClassroom = () => {
     const {data, error, loading} = useGetClassrooms()
     const {user} = useContext(UserContext)
@@ -21,7 +22,6 @@ const JoinClassroom = () => {
                 body: JSON.stringify({password})
             })
             const response = await request.json()
-            console.log(response)
             if(response.error) {
                 setError(response.error)
             }
@@ -32,22 +32,24 @@ const JoinClassroom = () => {
             console.error(err)
         }
     }
+    if(!user)
+        return <NotFound/>
     return (
         <div className='container mx-auto h-[100vh] mt-10'>
             {errora && <Error error={errora} />}
             <h1 className='text-4xl'>Join a classroom</h1>
             <div className='grid grid-cols-3 gap-4 mt-5'>
                 {loading && <p>Loading...</p>}
-                {data && data.map(classroom => {
-                    {classroom.mentor !== user.username ? (
+                {data && data.map(classroom => (
+                    classroom.mentor !== user.username ? (
                         <div onClick={() => {setClickedCourse(classroom); onOpen()}} key={classroom._id} className='bg-white p-4 rounded-md shadow-md'>
                             <h1 className='font-extrabold text-3xl text-black'>{classroom.subject}</h1>
                             <p className='text-black'>{classroom.description}</p>
                         </div>
-                    ): (
-                        <span></span>
-                    )}
-                })}
+                    ) : (
+                        <span key={classroom._id}></span>
+                    )
+                ))}
             </div>
             {clickedCourse && 
                 <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
