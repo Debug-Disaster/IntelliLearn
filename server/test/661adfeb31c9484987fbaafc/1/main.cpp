@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 using namespace std;
 
 bool binarySearch(vector<int>& arr, int target) {
@@ -16,7 +17,7 @@ bool binarySearch(vector<int>& arr, int target) {
     return false;
 }
 
-    int main() {
+int main() {
     int n;
     cin >> n;
     vector<int> arr(n);

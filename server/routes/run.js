@@ -25,17 +25,19 @@ function sanitizeCode(userCode) {
         'atomic', 'future', 'chrono', 'mutex', 'thread'
     ];
 
-    let sanitizedCode = userCode.replace(/#include\s*<([^>]+)>/g, (header) => {
-        if (allowedHeaders.includes(header)) {
-            return `#include <${header}>`;
+    let sanitizedCode = userCode.replace(/#include\s*<([^>]+)>/g, (match, header) => {
+        if (allowedHeaders.includes(header.trim())) {
+            return match; 
         } else {
-            return '';
+            return ''; 
         }
     });
-
     sanitizedCode = sanitizedCode.replace(/system\s*\(.+?\)/g, '');
 
     return sanitizedCode;
+}
+function trimBothEnds(str) {
+    return str.replace(/^[\s\n\t]+|[\s\n\t]+$/g, '');
 }
 router.post('/run', async(req, res) => {
     try{
@@ -70,10 +72,11 @@ router.post('/run', async(req, res) => {
         clasa.assignments[assignment].tests.forEach(test => {
             const input = test.input;
             const output = test.output;
-            const result = execSync(`${path}/main`, {
+            let result = execSync(`${path}/main`, {
                 input: input,
                 encoding: 'utf-8'
-            });
+            })
+            result = trimBothEnds(result);
             if(result === output){
                 results.push({input, output, result, status: 'AC'})
             }
