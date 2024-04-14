@@ -103,7 +103,7 @@
                     </Button>
                     }
                 </div>
-                {classroom.assignments && classroom.assignments.map((assignment, index) => (
+                {classroom.lessons && classroom.lessons.map((assignment, index) => (
                     <Card key={assignment._id} className="mt-6">
                         <CardHeader>
                             <h2 className="font-bold text-3xl">{assignment.title}</h2>
@@ -111,7 +111,7 @@
                         <CardBody>
                             <p className="font-semibold text-lg">Description: {assignment.description}</p>
                             <p className="font-semibold text-lg">Due date: {assignment.dueDate}</p>
-                            <p className="font-semibold text-lg">Problem page: <Link to={`/classrooms/${id}/lesson/${index}`}>Go to assignment</Link></p>
+                            <p className="font-semibold text-lg">Problem page: <Link to={`/classrooms/${id}/lesson/${index}`}>Go to lesson</Link></p>
                         </CardBody>
                     </Card>
                 ))}
