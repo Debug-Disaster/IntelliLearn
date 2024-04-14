@@ -67,12 +67,48 @@ const SearchPage = ({searchData}) => {
             <div className="contains-search">
                 <div>
                     <p>Students</p>
+                    <div className="contains-search-students">
+                        {/* {searchData.students.map((student, index) => {
+                            return (
+                                <div key={index} className="search-student" style={{marginTop:'20px !important'}}>
+                                    <p>{student.username}</p>
+                                </div>
+                            );
+                        })} */}
+                        <div className="search-student" style={{marginTop:'20px !important'}}>
+                            <p>Gigel</p>
+                        </div>
+                    </div>
                 </div>
                 <div>
                     <p>Mentors</p>
+                    <div className="contains-search-students">
+                        {/* {searchData.mentors.map((student, index) => {
+                            return (
+                                <div key={index} className="search-student" style={{marginTop:'20px !important'}}>
+                                    <p>{student.username}</p>
+                                </div>
+                            );
+                        })} */}
+                        <div className="search-student" style={{marginTop:'20px !important'}}>
+                            <p>Alex</p>
+                        </div>
+                    </div>
                 </div>
                 <div>
                     <p>Classes</p>
+                    <div className="contains-search-students">
+                        {/* {searchData.classes.map((student, index) => {
+                            return (
+                                <div key={index} className="search-student" style={{marginTop:'20px !important'}}>
+                                    <p>{student.subject}</p>
+                                </div>
+                            );
+                        })} */}
+                        <div className="search-student" style={{marginTop:'20px !important'}}>
+                            <p>Alex</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
