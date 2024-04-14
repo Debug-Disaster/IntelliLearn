@@ -91,6 +91,26 @@ app.post('/chatbot', async (req, res) => {
     }
 })
 ////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/search/:query', async (req, res) => {
+    try{
+        const { query } = req.params;
+/*         const cookies = cookie.parse(req.headers.cookie);
+        if (!cookies || !cookies.primaryToken || !cookies.refreshToken) {
+            return res.status(401).json({ error: 'Unauthorized' })
+        }
+        const { user } = await geUser(cookies.primaryToken, cookies.refreshToken);
+        if (!user) {
+            return res.status(401).json({ error: 'Unauthorized' })
+        } */
+        const users = await User.find({ username: { $regex: query, $options: 'i' } }).select('-password -classrooms -prompts -email');
+        const classrooms = await classroom.find({ mentor: { $regex: query, $options: 'i' } });
+        const mentors = await User.find({role: 'mentor',username: { $regex: query, $options: 'i' }}).select('-password -classrooms -prompts -email');   
+        return res.status(200).json({users, classrooms, mentors})         
+    }catch(err){
+        res.status(500).json({sucess:false, error: err.message})
+    }
+})
+////////////////////////////////////////////////////////////////////////////////////////////
 server.listen(8080, () => {
     mongoose.connect(process.env.MONGO_DB, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
         console.log('App is running and database connected')

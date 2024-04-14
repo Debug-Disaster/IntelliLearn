@@ -69,6 +69,9 @@ const userSchema = new mongoose.Schema({
     prompts : {
         type: Array,
     },
+    submissions: {
+        type: Array,
+    },
 }, {timestamps: true})
 
 module.exports = mongoose.model('user', userSchema)

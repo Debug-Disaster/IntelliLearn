@@ -94,13 +94,6 @@ export const Assignment = () => {
                     <h1 className="font-bold text-3xl">Assignment submitted!</h1>
                     <p className="font-semibold text-lg">You have successfully submitted the assignment!</p>
                     <p className="font-semibold text-lg">Results:</p>
-                    {assignmentFeedback.error && <p className="font-semibold text-lg">
-                        <Snippet color="danger">
-                            <pre>
-                                {assignmentFeedback.error}
-                            </pre>
-                        </Snippet>
-                    </p>}
                     {assignmentFeedback.message == 'All test cases passed!' ?  <p className="font-semibold text-lg">
                         <Snippet color="success">
                             <pre>

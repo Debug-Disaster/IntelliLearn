@@ -75,18 +75,18 @@ export const NavBar = () => {
                 </NavbarItem>
             </NavbarContent>
             <NavbarContent justify="end">
-            <Input className='search-input'
-            classNames={{
-                base: "max-w-full sm:max-w-[10rem] h-10",
-                mainWrapper: "h-full",
-                input: "text-small",
-                inputWrapper: "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
-            }}
-            placeholder="Type to search..."
-            size="sm"
-            startContent={<SearchIcon size={18} />}
-            type="search"
-            />
+                <Input className='search-input'
+                    classNames={{
+                        base: "max-w-full sm:max-w-[10rem] h-10",
+                        mainWrapper: "h-full",
+                        input: "text-small",
+                        inputWrapper: "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
+                    }}
+                    placeholder="Type to search..."
+                    size="sm"
+                    startContent={<SearchIcon size={18} />}
+                    type="search"
+                />
             {!user &&
             <div style={{display:'flex', gap:'15px'}}>
                 <NavbarItem className="hidden lg:flex">
