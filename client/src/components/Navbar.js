@@ -4,6 +4,7 @@ import {useState, useEffect} from 'react'
 import {UserContext} from '../context/UserContext'
 import {useContext} from 'react'
 import {useNavigate} from 'react-router-dom'
+import SearchPage from '../pages/SearchPage'
 export const SearchIcon = (props) => (
     <svg
       aria-hidden="true"
@@ -37,6 +38,7 @@ export const NavBar = () => {
     const navigate = useNavigate();
     const {user, auth, logout, getUser} = useContext(UserContext)
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [searchData, setSearchData] = useState("");
 
     const menuItems = [
      "Help & Feedback",
@@ -129,6 +131,8 @@ export const NavBar = () => {
             <NavbarMenu>
                 <div>
                 <Input
+                value={searchData}
+                onChange={(e) => setSearchData(e.target.value)}
                 classNames={{
                     base: "max-w-full sm:max-w-[10rem] h-10",
                     mainWrapper: "h-full",
