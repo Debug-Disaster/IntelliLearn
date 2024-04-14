@@ -13,7 +13,7 @@
      - Personalizare: Feedback-ul automat și interacțiunea cu MinaAI permit un proces de învățare personalizat, adaptat la nevoile și ritmul fiecărui elev.
      - Accesibilitate: Prin intermediul unei platforme online, IntelliLearn oferă acces la educație de calitate indiferent de locație sau program.
 ## Instalare:
-     - Instalati nodejs de [aici](). Daca aveti deja, nu este necesara reinstalarea acesteia.
+     - Instalati nodejs de [aici](https://nodejs.org/en/download/current) sau printr-un interpretator de comenzi. Daca aveti deja, nu este necesara reinstalarea acesteia.
      - Intrati in ambele directoare (client si server) pentru a instala package-urile, folosind comanda npm install si setati enviroment variables, stabilite asa:
      > ./server/.env
      MONGO_DB = string connection pentru conectarea la baza de date
