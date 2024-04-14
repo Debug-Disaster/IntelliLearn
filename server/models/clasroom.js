@@ -37,6 +37,10 @@ const classroomSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
+    lessons:{
+        type: Array,
+        required: true
+    },
     announcements: {
         type: Array,
         required: true

@@ -15,6 +15,7 @@ import MyClasses from "./pages/MyClasses";
 import { PostAssignment } from "./pages/PostAssignment";
 import { Assignment } from "./components/Assignment";
 import MinaAi from "./pages/MinaAi";
+import { PostLesson } from "./pages/PostLesson";
 function App() {
   return (
     <BrowserRouter>
@@ -72,6 +73,10 @@ function App() {
           <Route
             path="/classrooms/:id/new/assignment"
             element={<PostAssignment/> }  
+          />
+          <Route
+            path="/classrooms/:id/new/lesson"
+            element={<PostLesson/> }  
           />
           <Route
             path="/classrooms/:id/assignment/:index"

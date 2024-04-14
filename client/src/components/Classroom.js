@@ -95,6 +95,26 @@
                         </CardBody>
                     </Card>
                 ))}
+                <div style={{display:'flex', flexDirection:'row', gap:'20px', alignItems:'center'}} className="mt-6">
+                    <h1 className="font-extrabold text-4xl" >Materials</h1>
+                    {user.username === classroom.mentor &&
+                    <Button onClick={() => navigate(`/classrooms/${id}/new/lesson`)} color="default" type = "submit" variant="bordered" size='sm' style={{marginTop:'5px'}}>
+                        Post lesson
+                    </Button>
+                    }
+                </div>
+                {classroom.assignments && classroom.assignments.map((assignment, index) => (
+                    <Card key={assignment._id} className="mt-6">
+                        <CardHeader>
+                            <h2 className="font-bold text-3xl">{assignment.title}</h2>
+                        </CardHeader>
+                        <CardBody>
+                            <p className="font-semibold text-lg">Description: {assignment.description}</p>
+                            <p className="font-semibold text-lg">Due date: {assignment.dueDate}</p>
+                            <p className="font-semibold text-lg">Problem page: <Link to={`/classrooms/${id}/lesson/${index}`}>Go to assignment</Link></p>
+                        </CardBody>
+                    </Card>
+                ))}
                 <ScrollShadow className="h-[500px]">
                     <div className="mt-6">
                         <h1 className="font-extrabold text-4xl">Chat</h1>
