@@ -42,18 +42,14 @@ export const Assignment = () => {
                 })
             })
             const data = await res.json()
-            if(res.success === false){
-                console.log(data.error)
-            }else{
-                setAssignmentFeedback(data)
-                console.log(data)
-            }
+            setAssignmentFeedback(data)
             setLoading(false)
         }catch(err){
             setLoading(false)
             console.log(err)
         }
     }
+    console.log(assignmentFeedback)
     return (
         <div className="container mx-auto h-[100%] my-5 p-5">
             <h1 className="font-extrabold text-4xl">
@@ -94,20 +90,20 @@ export const Assignment = () => {
                     <h1 className="font-bold text-3xl">Assignment submitted!</h1>
                     <p className="font-semibold text-lg">You have successfully submitted the assignment!</p>
                     <p className="font-semibold text-lg">Results:</p>
-                    {assignmentFeedback.message == 'All test cases passed!' ?  <p className="font-semibold text-lg">
-                        <Snippet color="success">
+                    {assignmentFeedback.message == 'All test cases passed!' && !assignmentFeedback.error ?  <p className="font-semibold text-lg">
+                        <Snippet hideSymbol color="success">
                             <pre>
                                 Great job! You passed all the tests!
                             </pre>
                         </Snippet>
                     </p>: (
-                        <p className="font-semibold text-lg">
-                            <Snippet color="warning">
+                        <div className="font-semibold text-lg flex flex-col gap-4">
+                            <Snippet hideSymbol color="warning">
                                 <pre>
                                     Some test cases failed!
                                 </pre>
                             </Snippet>
-                        </p>
+                        </div>
                     )}
                     {assignmentFeedback.feedback && (
                         <div>

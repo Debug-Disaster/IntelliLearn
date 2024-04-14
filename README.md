@@ -22,3 +22,5 @@
      OpenAI = key pentru api-ul celor de la OpenAI
      > ./client/.env
      REACT_APP_TINYMCE = key pentru api-ul celor de la TinyMCE
+ ## Screenshots:
+ 	![MinaAi](1.png)

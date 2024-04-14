@@ -43,30 +43,27 @@ function sanitizeCode(userCode) {
 function trimBothEnds(str) {
     return str.replace(/^[\s\n\t]+|[\s\n\t]+$/g, '');
 }
-router.post('/run', async(req, res) => {
-    try{
-        const {classroom_id, assignment} = req.body;
-        let {code} = req.body;
+router.post('/run', async (req, res) => {
+    try {
+        const { classroom_id, assignment } = req.body;
+        let { code } = req.body;
         code = sanitizeCode(code);
         const cookies = cookie.parse(req.headers.cookie);
-        const {user} = await getUser(cookies.primaryToken, cookies.refreshToken);
+        const { user } = await getUser(cookies.primaryToken, cookies.refreshToken);
         const username = user.username;
-        const USER = await User.findOne({username})
+        const USER = await User.findOne({ username })
         const path = createAssignmentDirectory(username, classroom_id, assignment);
-        fs.mkdirSync(path, {recursive: true});
-        const clasa = await Classroom.findOne({_id: classroom_id});
-        if(!clasa){
-            return res.status(400).json({success: false, error: 'Invalid classroom'})
+        fs.mkdirSync(path, { recursive: true });
+        const clasa = await Classroom.findOne({ _id: classroom_id });
+        if (!clasa) {
+            return res.status(400).json({ success: false, error: 'Invalid classroom' })
         }
         fs.writeFileSync(`${path}/main.cpp`, code);
         const compile = execSync(`g++ ${path}/main.cpp -o ${path}/main`, {
             encoding: 'utf-8'
         });
-        if(compile){
-            return res.status(400).json({success: false, error: {
-                message: compile,
-                type: 'compile_error'
-            }})
+        if (compile) {
+            return res.status(400).json({ success: false, error: { message: compile, type: 'compile_error' } })
         }
         const results = []
         clasa.assignments[assignment].tests.forEach(test => {
@@ -77,11 +74,11 @@ router.post('/run', async(req, res) => {
                 encoding: 'utf-8'
             })
             result = trimBothEnds(result);
-            if(result === output){
-                results.push({input, output, result, status: 'AC'})
+            if (result === output) {
+                results.push({ input, output, result, status: 'AC' })
             }
-            else{
-                results.push({input, output, result, status: 'WA'})
+            else {
+                results.push({ input, output, result, status: 'WA' })
             }
         });
         date = new Date();
@@ -96,21 +93,19 @@ router.post('/run', async(req, res) => {
         clasa.submitted_assignments.push(submission);
         await clasa.save();
         await USER.save();
-        // feedback from open ai gpt-3.5 turbo
-        const prompt = `I just finished assignment ${assignment + 1} of ${clasa.mentor}'s classroom and here are the results: ${results.map(result => `Input: ${result.input}, Output: ${result.output}, Result: ${result.result}, Status: ${result.status}`).join(' ')}.` + (allPassed ? 'All test cases passed!' : 'Some test cases failed!') + 'Please provide feedback. The code is: ' + code + 'and the task was: ' + clasa.assignments[assignment].content;
+        const prompt = `I just finished assignment ${assignment + 1} of ${clasa.mentor}'s classroom and here are the results: ${results.map(result => `Input: ${result.input}, Output: ${result.output}, Result: ${result.result}, Status: ${result.status}`).join(' ')}.` + (allPassed ? 'All test cases passed!' : 'Some test cases failed!') + ' Please provide feedback. The code is: ' + code + ' and the task was: ' + clasa.assignments[assignment].content;
         const completion = await client.chat.completions.create({
             messages: [{ role: "system", content: prompt }],
             model: "gpt-3.5-turbo",
         });
         const feedback = completion.choices[0].message.content;
-        console.log(feedback)
-        if(allPassed){
-            return res.status(200).json({success: true, results, message: 'All test cases passed!', error: null, feedback})
-        }else{
-            return res.status(200).json({success: true, results, message: 'Some test cases failed!', error: true, feedback})
+        if (allPassed) {
+            return res.status(200).json({ success: true, results, message: 'All test cases passed!', error: null, feedback })
+        } else {
+            return res.status(200).json({ success: true, results, message: 'Some test cases failed!', error: true, feedback })
         }
-    }catch(error){
-        res.status(500).json({error: error.stderr, success: false})
+    } catch (error) {
+        res.status(500).json({ error: error.stderr, success: false })
     }
 })
 module.exports = router;

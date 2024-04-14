@@ -44,7 +44,7 @@
         }
         return (
             <div className="container mx-auto h-[100%] pb-10">
-                <h1 className="font-extrabold text-4xl">
+                <h1 className="font-extrabold text-4xl mt-4">
                     Welcome to {classroom.mentor}'s classroom!
                 </h1>
                 <Card className="mt-6">
