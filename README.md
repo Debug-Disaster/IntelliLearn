@@ -24,3 +24,8 @@
      REACT_APP_TINYMCE = key pentru api-ul celor de la TinyMCE
  ## Screenshots:
  	You can see each screnshoot in the repo.
+ ## Used techologies:
+ 	- Frontend:
+ 	> ReactJS, TanStack Query, Tailwind, NextUI, MUI
+ 	- Backend:
+ 	> NodeJS, ExpressJS, OpenAI, MongoDB
