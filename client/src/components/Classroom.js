@@ -111,7 +111,14 @@
                     <Button onClick={sendMessage} color="default" type = "submit" variant="bordered" size='sm'>
                         Send
                     </Button>
-                } className="mt-5" type="text" value={messageInput} onChange={(e) => setMessageInput(e.target.value)} />
+                }
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        sendMessage();
+                    }
+                }}
+                 className="mt-5" type="text" value={messageInput} onChange={(e) => setMessageInput(e.target.value)} />
             </div>
         )
     }

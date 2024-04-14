@@ -49,62 +49,14 @@ const MinaAi = () => {
                     }}>MinaAi</h1>
                 </div>
                 <div className='minaAi-byothpeople'>
-                    <p style={{paddingBottom:'5px'}} >New generations:</p>
                     <div className='flex  flex-col gap-2'>
-                        <div className='flex gap-2 pl-2' style={{cursor:'pointer'}}>
-                            <ChatBubbleOutlineIcon/>
-                            Pisoi 1
-                        </div>
-                        <div className='flex gap-2 pl-2' style={{cursor:'pointer'}}>
-                            <ChatBubbleOutlineIcon/>
-                            Pisoi 2
-                        </div>
-                        <div className='flex gap-2 pl-2' style={{cursor:'pointer'}}>
-                            <ChatBubbleOutlineIcon/>
-                            Pisoi 3
-                        </div>
-                        <div className='flex gap-2 pl-2' style={{cursor:'pointer'}}>
-                            <ChatBubbleOutlineIcon/>
-                            Pisoi 4
-                        </div>
-                        <div className='flex gap-2 pl-2' style={{cursor:'pointer'}}>
-                            <ChatBubbleOutlineIcon/>
-                            Pisoi 5
-                        </div>
-                        <div className='flex gap-2 pl-2' style={{cursor:'pointer'}}>
-                            <ChatBubbleOutlineIcon/>
-                            Pisoi 6
-                        </div>
+
                         {/* <p style={{fontSize:'2rem', marginTop:'-20px'}}> ... </p> */}
                     </div>
                 </div>
                 <div className='minaAi-byyou'>
-                    <p style={{paddingBottom:'5px'}}>Your generations:</p>
                     <div className='flex  flex-col gap-2'>
-                        <div className='flex gap-2 pl-2' style={{cursor:'pointer'}}>
-                            <ChatBubbleOutlineIcon/>
-                            Elefant 1
-                        </div>
-                        <div className='flex gap-2 pl-2' style={{cursor:'pointer'}}>
-                            <ChatBubbleOutlineIcon/>
-                            Elefant 2
-                        </div>
-                        <div className='flex gap-2 pl-2' style={{cursor:'pointer'}}>
-                            <ChatBubbleOutlineIcon/>
-                            Elefant 3
-                        </div>
-                        <div className='flex gap-2 pl-2' style={{cursor:'pointer'}}>
-                            <ChatBubbleOutlineIcon/>
-                            Elefant 4
-                        </div>
-                        <div className='flex gap-2 pl-2' style={{cursor:'pointer'}}>
-                            <ChatBubbleOutlineIcon/>
-                            Elefant 5
-                        </div>
-                        <div className='flex gap-2 pl-2' style={{cursor:'pointer'}}>
-                            <ChatBubbleOutlineIcon/>
-                            Elefant 6
-                        </div>
+                       
                         {/* <p style={{fontSize:'2rem', marginTop:'-20px'}}> ... </p> */}
                     </div>
                 </div>
@@ -137,27 +89,58 @@ const MinaAi = () => {
                                             <div className="flex w-[100%] mx-auto flex-row justify-evenly mt-12 mina-contains-prompt-ideas">
                                             <div className="prompt-ideas-mina" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
                                                 <div className="pl-4 pt-2 pr-4">
-                                                    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                                    <p> What are data structures and why are they important in programming?</p>
                                                 </div>
-                                                <SendIcon className="pb-3 pr-4 iconitaSend" style={{width:'40px', height:'40px', cursor:'pointer'}}/>
+                                                <SendIcon className="pb-3 pr-4 iconitaSend" style={{width:'40px', height:'40px', cursor:'pointer'}}
+                                                      onMouseEnter={() =>{
+                                                        setPrompt("What are data structures and why are they important in programming?");
+                                                    }}
+                                                    onClick={() =>{
+                                                        getPrompt();
+                                                        setPrompt('');
+                                                    }}/>          
                                             </div>
                                             <div className="prompt-ideas-mina" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
                                                 <div className="pl-4 pt-2 pr-4">
-                                                    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                                    <p> What are the differences between object-oriented programming and functional programming?</p>
                                                 </div>
-                                                <SendIcon className="pb-3 pr-4 iconitaSend" style={{width:'40px', height:'40px', cursor:'pointer'}}/>
+                                                <SendIcon 
+                                                    onMouseEnter={() =>{
+                                                        setPrompt("What are the differences between object-oriented programming and functional programming?");
+                                                    }}
+                                                    onClick={() =>{
+                                                        getPrompt();
+                                                        setPrompt('');
+                                                    }}
+                                                className="pb-3 pr-4 iconitaSend" style={{width:'40px', height:'40px', cursor:'pointer'}}/>
                                             </div>
                                             <div className="prompt-ideas-mina prompt-hidden-mina" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
                                                 <div className="pl-4 pt-2 pr-4">
-                                                    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                                    <p> What are the most important principles in object-oriented programming?</p>
                                                 </div>
-                                                <SendIcon className="pb-3 pr-4" style={{width:'40px', height:'40px', cursor:'pointer'}}/>
+                                                <SendIcon 
+                                                    onMouseEnter={() =>{
+                                                        setPrompt("What are the most important principles in object-oriented programming?");
+                                                    }}
+                                                    onClick={() =>{
+                                                        getPrompt();
+                                                        setPrompt('');
+                                                    }}
+                                                    className="pb-3 pr-4" style={{width:'40px', height:'40px', cursor:'pointer'}}/>
                                             </div>
                                             <div className="prompt-ideas-mina prompt-hidden-mina" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
                                                 <div className="pl-4 pt-2 pr-4">
-                                                    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                                    <p> How can you optimize the performance of a web application?</p>
                                                 </div>
-                                                <SendIcon className="pb-3 pr-4" style={{width:'40px', height:'40px', cursor:'pointer'}}/>
+                                                <SendIcon 
+                                                    onMouseEnter={() =>{
+                                                        setPrompt("How can you optimize the performance of a web application?");
+                                                    }}
+                                                    onClick={() =>{
+                                                        getPrompt();
+                                                        setPrompt('');
+                                                    }}
+                                                    className="pb-3 pr-4" style={{width:'40px', height:'40px', cursor:'pointer'}}/>
                                             </div>
                                         </div>
                     )}
