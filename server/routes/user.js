@@ -15,10 +15,10 @@ const generateToken = async(last_name, first_name, email, role) => {
     return {primaryToken, refreshToken}
 }
 schema
-.has().uppercase()                              // Must have uppercase letters
-.has().lowercase()                              // Must have lowercase letters
-.has().digits(2)                                // Must have at least 2 digits
-.has().not().spaces()                           // Should not have spaces
+.has().uppercase()                              
+.has().lowercase()                             
+.has().digits(2)                                
+.has().not().spaces()                           
 router.post('/register', async(req, res) => {
     try{
         const {last_name, first_name, email, password, role, status, school, major, subjects, confirmPassword, user_photo, username} = req.body
@@ -29,10 +29,6 @@ router.post('/register', async(req, res) => {
         if(userExistsWithThisEmail){
             return res.status(400).json({success:false, error: 'User with this email already exists'})
         }
-        // const userExistsWithTheseNames = await User.findOne({last_name, first_name})
-        // if(userExistsWithTheseNames){
-        //     return res.status(400).json({success:false, error: 'User with these names already exists'})
-        // }
         const userExistsWithUsername = await User.findOne({username})
         if(userExistsWithUsername)
             return res.status(400).json({success: false, error: 'User with this username already exists'})
@@ -170,8 +166,8 @@ router.post('/updateProfilePhoto', async(req, res) =>{
 router.get('/search', async(req, res)=>{
     try{
         const {search} = req.query
-        const studentSearches = await User.find({ username: search, role: 'student'});
-        const mentorSearches = await User.find({ username: search, role: 'mentor'});
+        const studentSearches = await User.find({ username: search, role: 'student'}).select("-password -email");;
+        const mentorSearches = await User.find({ username: search, role: 'mentor'}).select("-password -email");
         const classSearches = await Clase.find({ subject: search});
         const searchData={
             students: studentSearches,
